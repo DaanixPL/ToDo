@@ -1,4 +1,4 @@
-﻿using App.Application.Authentication;
+﻿using App.Application.Interfaces.Authentication;
 using App.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 
-namespace App.Infrastructure.Repositories
+namespace App.Infrastructure.Persistence.Repositories
 {
     public class JwtTokenGenerator(IConfiguration configuration) : ITokenGeneratorRepository
     {

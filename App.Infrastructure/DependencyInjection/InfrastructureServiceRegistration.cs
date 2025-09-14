@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using App.Domain.Abstractions;
-using App.Infrastructure.Repositories;
-using App.Application.Authentication;
 using Microsoft.Extensions.Configuration;
+using App.Infrastructure.Persistence.Repositories;
+using App.Application.Interfaces.Authentication;
 
 
 
@@ -16,11 +16,13 @@ namespace App.Infrastructure.DependencyInjection
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenGeneratorRepository, JwtTokenGenerator>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<ITodoItemRepository, TodoItemRepository>();
 
-            JwtServiceRegistration.AddJwtServices(services, configuration);
-            SwaggerServiceRegistration.AddSwaggerServices(services);
-            CorsServiceRegistration.AddCorsServices(services);
-            DatabaseServiceRegistration.AddDatabaseServices(services, configuration);
+            services.AddJwtServices(configuration);
+            services.AddSwaggerServices();
+            services.AddCorsServices();
+            services.AddDatabaseServices(configuration);
+            services.AddHttpContextAccessor();
             return services;
         }
     }

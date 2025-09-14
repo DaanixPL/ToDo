@@ -1,4 +1,4 @@
-﻿using App.Application.Authentication;
+﻿using App.Application.Interfaces.Authentication;
 using App.Application.Responses;
 using App.Domain.Abstractions;
 using App.Domain.Entities;

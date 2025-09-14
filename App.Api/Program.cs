@@ -1,10 +1,8 @@
 using App.Api.Middleware;
 using App.Application.Behaviors;
 using App.Application.DependencyInjection;
-using App.Infrastructure.Context;
 using App.Infrastructure.DependencyInjection;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace App.Api
 {

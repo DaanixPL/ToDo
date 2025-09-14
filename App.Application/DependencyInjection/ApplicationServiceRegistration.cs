@@ -17,6 +17,7 @@ namespace App.Application.DependencyInjection
 
             services.AddValidatorsFromAssemblyContaining<AddUserCommandValidator>();
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationBehavior<,>));
 
             services.AddAutoMapper(cfg => cfg.AddMaps(typeof(UserMappingProfile).Assembly));
 

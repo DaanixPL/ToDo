@@ -6,6 +6,8 @@
         public static string TooLong(string field, int max) => $"{field} must be at most {max} characters.";
         public static string TooShort(string field, int min) => $"{field} must be at least {min} characters.";
         public static string InvalidEmail(string field) => $"{field} is not a valid email address.";
+        public static string InvalidId(string field) => $"{field} is not a valid id.";
+        public static string InvalidDate(string field) => $"{field} is not a valid date.";
         public static string WhiteSpaces(string field) => $"{field} cannot contain spaces.";
         public static string isUnique(string field) => $"{field} is already exists.";
     }

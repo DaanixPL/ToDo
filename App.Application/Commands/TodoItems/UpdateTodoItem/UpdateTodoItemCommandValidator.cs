@@ -1,0 +1,25 @@
+﻿using App.Application.Commands.TodoItems.AddTodoItem;
+using App.Application.Commands.Users.UpdateUser;
+using App.Application.Validators.Extensions;
+using FluentValidation;
+
+namespace App.Application.Commands.TodoItems.UpdateTodoItem
+{
+    public class UpdateTodoItemCommandValidator : AbstractValidator<UpdateTodoItemCommand>
+    {
+        public UpdateTodoItemCommandValidator()
+        {
+            RuleFor(x => x.Id)
+                .ValidId(nameof(UpdateTodoItemCommand.Id))
+                .RequiredField(nameof(UpdateTodoItemCommand.Id));
+            RuleFor(x => x.Title)
+                .MaxLength(nameof(UpdateTodoItemCommand.Title), 100)
+                .When(x => !string.IsNullOrWhiteSpace(x.Title));
+            RuleFor(x => x.Description)
+                .MaxLength(nameof(UpdateTodoItemCommand.Description), 500)
+                .When(x => !string.IsNullOrWhiteSpace(x.Description));
+            RuleFor(x => x.CompletedAt)
+                .InvalidDate(nameof(UpdateTodoItemCommand.CompletedAt));
+        }
+    }
+}

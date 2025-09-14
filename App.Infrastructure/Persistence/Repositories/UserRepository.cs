@@ -1,9 +1,9 @@
 ﻿using App.Domain.Abstractions;
 using App.Domain.Entities;
-using App.Infrastructure.Context;
+using App.Infrastructure.Persistence.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace App.Infrastructure.Repositories
+namespace App.Infrastructure.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {

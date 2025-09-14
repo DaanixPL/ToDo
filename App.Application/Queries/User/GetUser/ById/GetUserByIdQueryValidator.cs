@@ -8,7 +8,8 @@ namespace App.Application.Queries.User.GetUser.ById
         public GetUserByIdQueryValidator() 
         {
             RuleFor(x => x.UserId)
-                .RequiredField(nameof(GetUserByIdQuery.UserId));
+                .RequiredField(nameof(GetUserByIdQuery.UserId))
+                .ValidId(nameof(GetUserByIdQuery.UserId));
         }
     }
 }

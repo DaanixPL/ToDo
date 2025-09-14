@@ -1,7 +1,7 @@
 ﻿using App.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace App.Infrastructure.Context
+namespace App.Infrastructure.Persistence.Data.Context
 {
     public class AppDbContext : DbContext
     {
@@ -11,6 +11,7 @@ namespace App.Infrastructure.Context
         // Tables
         public DbSet<User> Users { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<TodoItem> TodoItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

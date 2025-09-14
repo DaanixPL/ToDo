@@ -1,6 +1,6 @@
 ﻿using App.Domain.Entities;
 
-namespace App.Application.Authentication
+namespace App.Application.Interfaces.Authentication
 {
     public interface ITokenGeneratorRepository
     {
