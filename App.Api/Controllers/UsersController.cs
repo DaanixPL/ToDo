@@ -28,15 +28,7 @@ namespace App.Api.Controllers
         [HttpDelete("{id}")]          // DELETE /api/users/{id}
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "0");
-            var isAdmin = User.IsInRole("Admin");
-
-            if (!isAdmin && userId != id)
-            {
-                return Forbid();
-            }
-
-            var result = await _mediator.Send(new DeleteUserCommand(id));
+            await _mediator.Send(new DeleteUserCommand(id));
             return NoContent();
         }
 
@@ -44,13 +36,6 @@ namespace App.Api.Controllers
         [HttpPut("{id}")]             // PUT /api/users/{id}
         public async Task<IActionResult> UpdateUser(int id, UpdateUserCommand command)
         {
-            var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "0");
-            var isAdmin = User.IsInRole("Admin");
-
-            if (!isAdmin && userId != id)
-                return Forbid();
-
-            command.UserId = userId;
             var result = await _mediator.Send(command);
             return Ok(result);
         }
@@ -73,17 +58,7 @@ namespace App.Api.Controllers
         [HttpGet("{id}")]             // GET /api/users/{id}
         public async Task<IActionResult> GetUserById(int id)
         {
-            var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "0");
-            var isAdmin = User.IsInRole("Admin");
-
-            if (!isAdmin && userId != id)
-                return Forbid();
-
             var result = await _mediator.Send(new GetUserByIdQuery(id));
-            if(result == null)
-            {
-                return NotFound();
-            }
             return Ok(result);
         }
 
@@ -91,22 +66,7 @@ namespace App.Api.Controllers
         [HttpGet("by-email")]         // GET /api/users/by-email?email=...
         public async Task<IActionResult> GetUserByEmail([FromQuery] string email)
         {
-            var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "0");
-            var isAdmin = User.IsInRole("Admin");
-
-            if (!isAdmin)
-            {
-                var user = await _mediator.Send(new GetUserByEmailQuery(email));
-                if (user == null || user.Id != userId)
-                    return Forbid();
-                return Ok(user);
-            }
-
             var result = await _mediator.Send(new GetUserByEmailQuery(email));
-            if (result == null)
-            {
-                return NotFound();
-            }
             return Ok(result);
         }
 
@@ -114,22 +74,7 @@ namespace App.Api.Controllers
         [HttpGet("by-username")]      // GET /api/users/by-username?username=...
         public async Task<IActionResult> GetUserByUsername([FromQuery] string username)
         {
-            var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "0");
-            var isAdmin = User.IsInRole("Admin");
-
-            if (!isAdmin)
-            {
-                var user = await _mediator.Send(new GetUserByUsernameQuery(username));
-                if (user == null || user.Id != userId)
-                    return Forbid();
-                return Ok(user);
-            }
-
             var result = await _mediator.Send(new GetUserByUsernameQuery(username));
-            if (result == null)
-            {
-                return NotFound();
-            }
             return Ok(result);
         }
     }

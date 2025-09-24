@@ -1,0 +1,45 @@
+﻿@page "/login"
+
+<div class="login-wrapper">
+    <MudCard Style="max-width:400px;width:100%">
+        <MudCardContent>
+            <MudField Label="Email or Username"
+                      Variant="Variant.Outlined"
+                      FullWidth="true">
+                      <MudInput @bind-Value="email" />
+            </MudField>
+
+            <MudField Label="Password"
+                      Variant="Variant.Outlined"
+                      FullWidth="true">
+                <MudInput @bind-Value="password"
+                          InputType="InputType.Password" />
+            </MudField>
+            <MudStack>
+                <MudLink Href="#" Typo="Typo.subtitle1" Color="Color.Info" Underline="Underline.None">Forgot Password?</MudLink>
+
+                <MudFlexBreak />
+
+                <MudItem xs="12">
+                    <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Primary" OnClick="LoginUser">Login</MudButton>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudButton Href="/register" Variant="Variant.Filled" FullWidth="true" Color="Color.Secondary">Register</MudButton>
+                </MudItem>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</div>
+
+@code {
+    string email;
+    string password;
+
+    void LoginUser()
+    {
+        email = "";
+        password = "";
+        Console.WriteLine($"Login: {email} / {password}");
+    }
+
+}
