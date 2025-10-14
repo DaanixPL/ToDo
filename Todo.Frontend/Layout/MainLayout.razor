@@ -9,20 +9,20 @@
 @* Needed for snackbars *@
 <MudSnackbarProvider />
 
-<MudAppBar Color="Color.Primary" Elevation="4">
-    <MudLink Href="#" Typo="Typo.h4" Color="Color.Secondary" Underline="Underline.None" Class="hover-zoom">
-        vDanix
-    </MudLink>
+<PageTitle>vDanix ToDo</PageTitle>
+
+<MudAppBar Elevation="16" Class="navbar">
+    <MudButton Variant="Variant.Text" Href="/" Class="logo">vDanix</MudButton>
     <MudSpacer />
-    <MudLink Href="login" Typo="Typo.h6" Color="Color.Secondary" Underline="Underline.None" Class="hover-zoom">
-        Login
-    </MudLink>
+    <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Href="/login">Login</MudButton>
 </MudAppBar>
 
-<div class="page" style="padding-top:64px;">
+<div class="page">
     <main>
-        <article class="content px-4">
-            @Body
-        </article>
+        <div class="app-background">
+            <article>
+                @Body
+            </article>
+        </div>
     </main>
 </div>

@@ -1,25 +1,25 @@
 ﻿@page "/register"
 
 <div class="login-wrapper">
-    <MudCard Style="max-width:400px;width:100%">
+    <MudCard Class="card" Style="max-width:400px;width:100%">
         <MudCardContent>
-            <MudField Label="Email or Username"
+            <MudField Label="Email"
                       Variant="Variant.Outlined"
                       FullWidth="true">
-                <MudInput @bind-Value="email" />
+                <MudInput @bind-Value="email" Class="full" />
             </MudField>
 
             <MudField Label="Username"
                       Variant="Variant.Outlined"
                       FullWidth="true">
-                <MudInput @bind-Value="username" />
+                <MudInput @bind-Value="username" Class="full" />
             </MudField>
 
 
             <MudField Label="Password"
                       Variant="Variant.Outlined"
                       FullWidth="true">
-                <MudInput @bind-Value="password"
+                <MudInput @bind-Value="password" Class="full"
                           InputType="InputType.Password" />
             </MudField>
             <MudStack>
@@ -28,7 +28,11 @@
                 <MudFlexBreak />
 
                 <MudItem xs="12">
-                    <MudButton Variant="Variant.Filled" FullWidth="true" Color="Color.Secondary" >Register</MudButton>
+                    <MudButton Variant="Variant.Filled"
+                               FullWidth="true"
+                               Color="Color.Secondary"
+                               OnClick="RegisterUser">
+                                    Register</MudButton>
                 </MudItem>
                 <MudItem xs="12">
                     <MudButton Href="/login" Variant="Variant.Filled" FullWidth="true" Color="Color.Primary">Login</MudButton>

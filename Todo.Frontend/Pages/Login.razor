@@ -1,18 +1,18 @@
 ﻿@page "/login"
 
 <div class="login-wrapper">
-    <MudCard Style="max-width:400px;width:100%">
+    <MudCard Class="card" Style="max-width:400px;width:100%" >
         <MudCardContent>
             <MudField Label="Email or Username"
                       Variant="Variant.Outlined"
                       FullWidth="true">
-                      <MudInput @bind-Value="email" />
+                <MudInput @bind-Value="email" Class="full" />
             </MudField>
 
-            <MudField Label="Password"
+            <MudField Label="Password" 
                       Variant="Variant.Outlined"
                       FullWidth="true">
-                <MudInput @bind-Value="password"
+                <MudInput @bind-Value="password" Class="full"
                           InputType="InputType.Password" />
             </MudField>
             <MudStack>
