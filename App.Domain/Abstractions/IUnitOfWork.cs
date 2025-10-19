@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Abstractions
+﻿namespace ToDo.Domain.Abstractions
 {
     public interface IUnitOfWork : IDisposable
     {

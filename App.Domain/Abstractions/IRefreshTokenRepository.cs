@@ -1,6 +1,6 @@
-﻿using App.Domain.Entities;
+﻿using ToDo.Domain.Entities;
 
-namespace App.Domain.Abstractions
+namespace ToDo.Domain.Abstractions
 {
     public interface IRefreshTokenRepository
     {

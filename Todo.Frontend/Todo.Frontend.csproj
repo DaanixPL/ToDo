@@ -16,4 +16,8 @@
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\App.Domain\ToDo.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

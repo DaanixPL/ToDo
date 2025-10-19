@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @* Required *@
-<MudThemeProvider />
+<MudThemeProvider Theme="Theme" @bind-IsDarkMode="@_isDarkMode" />
 <MudPopoverProvider />
 
 @* Needed for dialogs *@
@@ -26,3 +26,33 @@
         </div>
     </main>
 </div>
+
+<MudPaper Elevation="16" Class="fotter">
+    <MudText Typo="Typo.subtitle2" Align="Align.Center">Created by vDanix and ❤️ to c#</MudText>
+</MudPaper>
+
+@code {
+    private bool _isDarkMode = true;
+
+    MudTheme Theme = new MudTheme()
+    {
+        PaletteLight = new PaletteLight()
+        {
+        
+        },
+        PaletteDark = new PaletteDark()
+        {
+            Primary = "00BCD4",
+            Secondary = "FFC107",
+            AppbarBackground = Colors.Red.Default,
+            AppbarText = "dce0d9",
+            TextPrimary = "F5F5F5",
+        },
+
+        LayoutProperties = new LayoutProperties()
+        {
+            DrawerWidthLeft = "260px",
+            DrawerWidthRight = "300px"
+        }
+    };
+}

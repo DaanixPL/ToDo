@@ -1,4 +1,4 @@
-﻿namespace App.Domain.Entities
+﻿namespace ToDo.Domain.Entities
 {
     public class User
     {

@@ -26,6 +26,11 @@
     background-color: rgba(0, 0, 0, 0.3);
     -webkit-backdrop-filter: blur(10px);
 }
+.fotter {
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.3);
+    -webkit-backdrop-filter: blur(10px);
+}
 
 .navbar .logo {
     font-size: 1.5rem;

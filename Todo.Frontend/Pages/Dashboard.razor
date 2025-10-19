@@ -1,0 +1,53 @@
+﻿@page "/dashboard"
+@inject HttpClient Http
+@using global::App.Domain.Entities
+
+<div class="login-wrapper">
+    <MudCard Class="card" Style="max-width:1920px;width:95%">
+        <MudCardContent>
+            <MudText>Welcome</MudText>
+            <MudCard Class="card" Style="max-width:400px;width:100%">
+                <MudCardContent>
+                    <MudText>Your ToDo task:</MudText>
+                    <MudList T="string">
+                        <MudListItem>Task 1</MudListItem>
+                    </MudList>
+                    <MudList T="string">
+                        <MudListItem>Task 1</MudListItem>
+                    </MudList>
+                </MudCardContent>
+            </MudCard>
+        </MudCardContent>
+    </MudCard>
+</div>
+
+@code {
+
+
+    private List<TodoItem> items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        string apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJzdHJpbmciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJIdWpAQ2luYS5waXpkZSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzYwNDgxNjEzLCJpc3MiOiJBcHAiLCJhdWQiOiJVc2VyQXBwIn0.eVsKpfM4gY77TutxECMrAlae68BM13MpNjhRRS10Ab0";
+        var token = $"Bearer {apiKey}"; // najlepiej wstrzyknąć lub pobrać z localStorage/session
+
+        var request = new HttpRequestMessage(HttpMethod.Get, "api/TodoItems/me");
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        var response = await Http.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            items = System.Text.Json.JsonSerializer.Deserialize<List<TodoItem>>(json, new System.Text.Json.JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+        }
+        else
+        {
+            // obsłuż błąd
+            items = new List<TodoItem>();
+        }
+    }
+}
