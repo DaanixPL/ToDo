@@ -1,6 +1,6 @@
 ﻿using App.Application.Validators.Exceptions;
-using App.Domain.Abstractions;
-using App.Domain.Entities;
+using ToDo.Domain.Abstractions;
+using ToDo.Domain.Entities;
 using MediatR;
 
 namespace App.Application.Queries.TodoItems.GetTodoItem.ByUserId

@@ -1,7 +1,7 @@
-﻿using App.Domain.Abstractions;
-using App.Domain.Entities;
+﻿using ToDo.Domain.Abstractions;
 using AutoMapper;
 using MediatR;
+using ToDo.Domain.Entities;
 
 namespace App.Application.Commands.Users.AddUser
 {

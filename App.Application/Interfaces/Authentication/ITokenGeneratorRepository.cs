@@ -1,4 +1,4 @@
-﻿using App.Domain.Entities;
+﻿using ToDo.Domain.Entities;
 
 namespace App.Application.Interfaces.Authentication
 {

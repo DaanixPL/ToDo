@@ -1,6 +1,5 @@
-﻿using App.Application.Queries.User.GetUser.ById;
-using App.Application.Validators.Exceptions;
-using App.Domain.Abstractions;
+﻿using App.Application.Validators.Exceptions;
+using ToDo.Domain.Abstractions;
 using App.Domain.DTOs;
 using AutoMapper;
 using MediatR;

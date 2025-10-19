@@ -1,5 +1,5 @@
 ﻿using App.Application.Validators.Exceptions;
-using App.Domain.Abstractions;
+using ToDo.Domain.Abstractions;
 using MediatR;
 
 namespace App.Application.Commands.Users.DeleteUser

@@ -1,4 +1,4 @@
-﻿using App.Domain.Abstractions;
+﻿using ToDo.Domain.Abstractions;
 using App.Infrastructure.Persistence.Data.Context;
 
 namespace App.Infrastructure.Persistence.Repositories

@@ -1,5 +1,5 @@
-﻿using App.Domain.Abstractions;
-using App.Domain.Entities;
+﻿using ToDo.Domain.Abstractions;
+using ToDo.Domain.Entities;
 using App.Infrastructure.Persistence.Data.Context;
 using Microsoft.EntityFrameworkCore;
 

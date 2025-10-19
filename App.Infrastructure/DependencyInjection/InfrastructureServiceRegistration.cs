@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using App.Domain.Abstractions;
+using ToDo.Domain.Abstractions;
 using Microsoft.Extensions.Configuration;
 using App.Infrastructure.Persistence.Repositories;
 using App.Application.Interfaces.Authentication;

@@ -1,4 +1,4 @@
-﻿using App.Domain.Entities;
+﻿using ToDo.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructure.Persistence.Data.Context

@@ -1,5 +1,5 @@
 ﻿using App.Application.Validators.Extensions;
-using App.Domain.Abstractions;
+using ToDo.Domain.Abstractions;
 using FluentValidation;
 
 namespace App.Application.Commands.Users.AddUser

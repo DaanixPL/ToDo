@@ -1,5 +1,5 @@
 ﻿using App.Application.Commands.TodoItems.AddTodoItem;
-using App.Domain.Entities;
+using ToDo.Domain.Entities;
 using AutoMapper;
 
 namespace App.Application.Mappings

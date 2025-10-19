@@ -1,6 +1,5 @@
-﻿using App.Application.DTOs;
-using App.Domain.Abstractions;
-using App.Domain.Entities;
+﻿using ToDo.Domain.Abstractions;
+using ToDo.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;

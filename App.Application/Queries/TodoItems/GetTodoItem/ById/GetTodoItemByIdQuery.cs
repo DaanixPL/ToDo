@@ -1,5 +1,5 @@
 ﻿using App.Application.Interfaces.Authorizable;
-using App.Domain.Entities;
+using ToDo.Domain.Entities;
 using MediatR;
 
 namespace App.Application.Queries.TodoItems.GetTodoItem.ById
