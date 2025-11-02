@@ -1,4 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@using Todo.Frontend.Models
+@inject HttpClient Http
+@inject Microsoft.AspNetCore.Components.NavigationManager NavManager
+@inherits LayoutComponentBase
 @* Required *@
 <MudThemeProvider Theme="Theme" @bind-IsDarkMode="@_isDarkMode" />
 <MudPopoverProvider />
@@ -14,7 +17,22 @@
 <MudAppBar Elevation="16" Class="navbar">
     <MudButton Variant="Variant.Text" Href="/" Class="logo">vDanix</MudButton>
     <MudSpacer />
-    <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Href="/login">Login</MudButton>
+    @if (isLoggedIn == true)
+    {
+        <MudMenu>
+            <ActivatorContent>
+                <MudAvatar Color="Color.Secondary">@firstLeatterUsername</MudAvatar>
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem Icon="@Icons.Material.Filled.Dashboard" Href="/dashboard" Label="Dashboard"/>
+                <MudMenuItem Icon="@Icons.Material.Filled.Logout" OnClick="() => Logout()" Label="Logout"/>
+            </ChildContent>
+        </MudMenu>
+    }
+    else
+    {
+        <MudButton Variant="Variant.Outlined" Color="Color.Secondary" Href="/login">Login</MudButton>
+    }
 </MudAppBar>
 
 <div class="page">
@@ -32,13 +50,22 @@
 </MudPaper>
 
 @code {
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
     private bool _isDarkMode = true;
+    private bool isLoggedIn = false;
+    private char firstLeatterUsername;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await IsLogin();
+        await GetFirstOfUsername();
+    }
     MudTheme Theme = new MudTheme()
     {
         PaletteLight = new PaletteLight()
         {
-        
+
         },
         PaletteDark = new PaletteDark()
         {
@@ -55,4 +82,77 @@
             DrawerWidthRight = "300px"
         }
     };
+    private async Task IsLogin()
+    {
+        var apiKey = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
+        var username = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "username");
+        var request = new HttpRequestMessage(HttpMethod.Get, $"/api/Users/by-username?username={username}");
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
+
+        var response = await Http.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            isLoggedIn = true;
+        }
+        else
+        {
+            var refreshToken = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "refreshToken");
+            if (refreshToken == null)
+                return;
+            else if (apiKey == null)
+                return;
+            var refreshCommand = new
+            {
+                accessToken = apiKey,
+                refreshToken = refreshToken,
+            };
+            var refreshRequest = new HttpRequestMessage(HttpMethod.Post, "/api/Auth/refresh")
+                {
+                    Content = new StringContent(
+                    System.Text.Json.JsonSerializer.Serialize(refreshCommand),
+                    System.Text.Encoding.UTF8,
+                    "application/json")
+                };
+            var refreshResponse = await Http.SendAsync(refreshRequest);
+            if (refreshResponse.IsSuccessStatusCode)
+            {
+                var jsonContent = await refreshResponse.Content.ReadAsStringAsync();
+
+                var refreshResult = System.Text.Json.JsonSerializer.Deserialize<RefreshResponse>(jsonContent,
+                              new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (refreshResult != null && !string.IsNullOrEmpty(refreshResult.AccessToken) && !string.IsNullOrEmpty(refreshResult.RefreshToken))
+                {
+                    await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", refreshResult.AccessToken);
+                    await JSRuntime.InvokeVoidAsync("localStorage.setItem", "refreshToken", refreshResult.RefreshToken);
+                    isLoggedIn = true;
+                }
+            }
+            else
+            {
+                isLoggedIn = false;
+                Console.WriteLine("Blad przy refreshToken");
+            }
+        }
+    }
+    private async Task GetFirstOfUsername()
+    {
+        var username = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "username");
+        if (username == null)
+        {
+            isLoggedIn = false;
+            return;
+        }
+        firstLeatterUsername = char.ToUpper(username[0]);
+    }
+    private async Task Logout()
+    {
+        await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "authToken");
+        await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "refreshToken");
+        await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "username");
+
+        isLoggedIn = false;
+        StateHasChanged();
+    }
 }

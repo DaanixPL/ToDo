@@ -13,8 +13,12 @@
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
-        </LayoutView>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <div class="flex justify-center items-center h-screen">
+                <MudText Typo="Typo.h3" Class="**text-center**">
+                    Sorry, there's nothing at this address.
+                </MudText>
+            </div>
+            </LayoutView>
     </NotFound>
 </Router>

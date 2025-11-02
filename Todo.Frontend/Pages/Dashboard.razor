@@ -112,36 +112,7 @@
                 NavManager.NavigateTo("/login");
             }
         }
-        //     var refreshCommand = new
-        //     {
-        //         authToken = apiKey,
-        //         refreshToken = refreshToken,
-        //     };
-        //     var refreshRequest = new HttpRequestMessage(HttpMethod.Post, "/api/Auth/refresh")
-        //         {
-        //             Content = new StringContent(
-        //             System.Text.Json.JsonSerializer.Serialize(refreshCommand),
-        //             System.Text.Encoding.UTF8,
-        //             "application/json")
-        //         };
-        //     var refreshResponse = await Http.SendAsync(refreshRequest);
-        //     if (refreshResponse.IsSuccessStatusCode)
-        //     {
-        //         var jsonContent = await refreshResponse.Content.ReadAsStringAsync();
-        //
-        //         var refreshResult = System.Text.Json.JsonSerializer.Deserialize<LoginResponse>(jsonContent,
-        //                       new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-        //
-        //         if (refreshResult != null && !string.IsNullOrEmpty(refreshResult.AccessToken) && !string.IsNullOrEmpty(refreshResult.RefreshToken))
-        //         {
-        //             await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", refreshResult.AccessToken);
-        //             await JSRuntime.InvokeVoidAsync("localStorage.setItem", "refreshToken", refreshResult.RefreshToken);
-        //         }
-        //     }
-        //     else
-        //     {
-        //         Console.WriteLine("Blad przy refreshToken");
-        //     }
+       
         var request = new HttpRequestMessage(HttpMethod.Get, "/api/TodoItems/me");
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 
