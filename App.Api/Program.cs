@@ -32,6 +32,7 @@ namespace App.Api
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowAllOrigins");
             app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();

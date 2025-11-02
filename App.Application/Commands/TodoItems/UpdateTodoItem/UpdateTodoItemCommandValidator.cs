@@ -18,8 +18,6 @@ namespace App.Application.Commands.TodoItems.UpdateTodoItem
             RuleFor(x => x.Description)
                 .MaxLength(nameof(UpdateTodoItemCommand.Description), 500)
                 .When(x => !string.IsNullOrWhiteSpace(x.Description));
-            RuleFor(x => x.CompletedAt)
-                .InvalidDate(nameof(UpdateTodoItemCommand.CompletedAt));
         }
     }
 }

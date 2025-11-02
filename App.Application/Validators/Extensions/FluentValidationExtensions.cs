@@ -44,25 +44,25 @@ namespace App.Application.Validators.Extensions
                 .GreaterThan(0)
                 .WithMessage(ValidationMessage.InvalidId(fieldName));
         }
-        public static IRuleBuilderOptions<T, string> InvalidDate<T>(this IRuleBuilder<T, string> ruleBuilder, string fieldName)
-        {
-            return ruleBuilder
-                .Must(dateString =>
-                {
-                    if (string.IsNullOrEmpty(dateString))
-                    {
-                        return true;
-                    }
-
-                    return DateTime.TryParseExact(
-                        dateString,
-                        "yyyy-MM-dd HH:mm:ss.fffffff",
-                        CultureInfo.InvariantCulture,
-                        DateTimeStyles.None,
-                        out _);
-                })
-                .WithMessage(ValidationMessage.InvalidDate(fieldName));
-        }
+        //public static IRuleBuilderOptions<T, string> InvalidDate<T>(this IRuleBuilder<T, string> ruleBuilder, string fieldName)
+        //{
+        //    return ruleBuilder
+        //        .Must(dateString =>
+        //        {
+        //            if (string.IsNullOrEmpty(dateString))
+        //            {
+        //                return true;
+        //            }
+        //
+        //            return DateTime.TryParseExact(
+        //                dateString,
+        //                "yyyy-MM-dd HH:mm:ss.fffffff",
+        //                CultureInfo.InvariantCulture,
+        //                DateTimeStyles.None,
+        //                out _);
+        //        })
+        //        .WithMessage(ValidationMessage.InvalidDate(fieldName));
+        //}
         public static IRuleBuilderOptions<T, string> NoWhiteSpaces<T>(this IRuleBuilder<T, string> ruleBuilder, string fieldName)
         {
             return ruleBuilder

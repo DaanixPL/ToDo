@@ -28,6 +28,11 @@ namespace App.Application.Commands.TodoItems.UpdateTodoItem
 
             _mapper.Map(command, todoItem);
 
+            if(command.IsCompleted.HasValue && command.IsCompleted.Value == false)
+            {
+                todoItem.CompletedAt = null;
+            }
+
             await _unitOfWork.TodoItems.UpdateTodoItemAsync(todoItem, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
