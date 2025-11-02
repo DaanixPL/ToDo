@@ -27,9 +27,12 @@ namespace App.Application.Behaviors
                 var userId = int.Parse(user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "0");
                 var isAdmin = user.IsInRole("Admin");
 
-                if (!isAdmin || !authRequest.AllowAdminOverride)
+                if(userId != authRequest.ResourceOwnerId)
                 {
-                    throw new UnauthorizedAccessException("Forbidden: not owner of resource");
+                    if (!(authRequest.AllowAdminOverride || isAdmin))
+                    {
+                        throw new UnauthorizedAccessException("Forbidden: not owner of resource");
+                    }
                 }
             }
 

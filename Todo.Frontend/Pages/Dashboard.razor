@@ -1,6 +1,7 @@
 ﻿@page "/dashboard"
 @inject HttpClient Http
 @using global::ToDo.Domain.Entities
+@using Todo.Frontend.Models
 
 <div class="login-wrapper">
     <MudCard Class="card" Style="max-width:1920px;width:95%">
@@ -91,12 +92,56 @@
 </div>
 
 @code {
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+    [Inject]
+    public NavigationManager NavManager { get; set; }
     private List<TodoItem> tasks;
-    private string apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwidW5pcXVlX25hbWUiOiJzdHJpbmciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJIdWpAQ2luYS5waXpkZSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzYyMTA2Mjg0LCJpc3MiOiJBcHAiLCJhdWQiOiJVc2VyQXBwIn0.7hIo1MuG2PjiYNV9dno2Lr-LMkXt7ege72xu4HCj514";
+    private string apiKey = "";
     int? isEditing = 0;
 
     protected override async Task OnInitializedAsync()
     {
+        apiKey = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
+        if (string.IsNullOrEmpty(apiKey))
+        {
+            var refreshToken = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "refreshToken");
+
+            if (!string.IsNullOrEmpty(refreshToken))
+            {
+                NavManager.NavigateTo("/login");
+            }
+        }
+        //     var refreshCommand = new
+        //     {
+        //         authToken = apiKey,
+        //         refreshToken = refreshToken,
+        //     };
+        //     var refreshRequest = new HttpRequestMessage(HttpMethod.Post, "/api/Auth/refresh")
+        //         {
+        //             Content = new StringContent(
+        //             System.Text.Json.JsonSerializer.Serialize(refreshCommand),
+        //             System.Text.Encoding.UTF8,
+        //             "application/json")
+        //         };
+        //     var refreshResponse = await Http.SendAsync(refreshRequest);
+        //     if (refreshResponse.IsSuccessStatusCode)
+        //     {
+        //         var jsonContent = await refreshResponse.Content.ReadAsStringAsync();
+        //
+        //         var refreshResult = System.Text.Json.JsonSerializer.Deserialize<LoginResponse>(jsonContent,
+        //                       new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        //
+        //         if (refreshResult != null && !string.IsNullOrEmpty(refreshResult.AccessToken) && !string.IsNullOrEmpty(refreshResult.RefreshToken))
+        //         {
+        //             await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", refreshResult.AccessToken);
+        //             await JSRuntime.InvokeVoidAsync("localStorage.setItem", "refreshToken", refreshResult.RefreshToken);
+        //         }
+        //     }
+        //     else
+        //     {
+        //         Console.WriteLine("Blad przy refreshToken");
+        //     }
         var request = new HttpRequestMessage(HttpMethod.Get, "/api/TodoItems/me");
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 

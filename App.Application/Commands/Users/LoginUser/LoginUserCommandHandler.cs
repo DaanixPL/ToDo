@@ -31,14 +31,14 @@ namespace App.Application.Commands.Users.LoginUser
 
             if (user == null)
             {
-                throw new UnauthorizedAccessException("Invalid credentials.");
+                throw new UnauthorizedAccessException("User is null.");
             }
 
             var isValidPassword = BCrypt.Net.BCrypt.Verify(command.Password, user.PasswordHash);
 
             if (!isValidPassword)
             {
-                throw new UnauthorizedAccessException("Invalid credentials.");
+                throw new UnauthorizedAccessException("Invalid Password.");
             }
 
             user.LastLoginDate = DateTime.UtcNow;

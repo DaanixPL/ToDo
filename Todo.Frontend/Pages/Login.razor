@@ -1,4 +1,8 @@
 ﻿@page "/login"
+@using Todo.Frontend.Models
+@inject HttpClient Http
+@inject Microsoft.JSInterop.IJSRuntime JSRuntime
+@inject Microsoft.AspNetCore.Components.NavigationManager NavManager
 
 <div class="login-wrapper">
     <MudCard Class="card" Style="max-width:400px;width:100%" >
@@ -35,11 +39,42 @@
     string email;
     string password;
 
-    void LoginUser()
+    private async Task LoginUser()
     {
-        email = "";
-        password = "";
-        Console.WriteLine($"Login: {email} / {password}");
-    }
+        var user = new
+        {
+            emailOrUsername = email,
+            password = password,
+        };
+        var request = new HttpRequestMessage(HttpMethod.Post, $"/api/Users/login")
+    {
+        Content = new StringContent(
+            System.Text.Json.JsonSerializer.Serialize(user),
+            System.Text.Encoding.UTF8,
+            "application/json")
+    };
 
+        var response = await Http.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var jsonContent = await response.Content.ReadAsStringAsync();
+
+            var loginResult = System.Text.Json.JsonSerializer.Deserialize<LoginResponse>(jsonContent,
+                          new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            if (loginResult != null && !string.IsNullOrEmpty(loginResult.AccessToken))
+            {
+                await JSRuntime.InvokeVoidAsync("localStorage.setItem", "authToken", loginResult.AccessToken);
+                await JSRuntime.InvokeVoidAsync("localStorage.setItem", "refreshToken", loginResult.RefreshToken);
+                await JSRuntime.InvokeVoidAsync("localStorage.setItem", "username", loginResult.Username);
+
+                NavManager.NavigateTo("/dashboard");
+            }
+        }
+        else
+        {
+            Console.WriteLine("BLAD LOGOWANANIA");
+        }
+    }
 }

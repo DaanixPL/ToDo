@@ -1,4 +1,6 @@
 ﻿@page "/register"
+@inject HttpClient Http
+@inject Microsoft.AspNetCore.Components.NavigationManager NavManager
 
 <div class="login-wrapper">
     <MudCard Class="card" Style="max-width:400px;width:100%">
@@ -44,15 +46,34 @@
 
 @code {
     string email;
-    string username;
     string password;
+    string username;
 
-    void RegisterUser()
+    private async Task RegisterUser()
     {
-        email = "";
-        password = "";
-        username = "";
-        Console.WriteLine($"Register: {email} / {username} / {password}");
-    }
+        var user = new
+        {
+            username = username,
+            email = email,
+            password = password,
+        };
+        var request = new HttpRequestMessage(HttpMethod.Post, $"/api/Users")
+        {
+            Content = new StringContent(
+            System.Text.Json.JsonSerializer.Serialize(user),
+            System.Text.Encoding.UTF8,
+            "application/json")
+        };
 
+        var response = await Http.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            NavManager.NavigateTo("/login");
+        }
+        else
+        {
+            Console.WriteLine("BLAD register" + response);
+        }
+    }
 }

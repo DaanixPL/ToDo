@@ -3,9 +3,5 @@ using MediatR;
 
 namespace App.Application.Commands.Users.AddUser
 {
-    public record AddUserCommand(string Username, string Email, string Password) : IRequest<int>, IAuthorizableRequest
-    {
-        public int? ResourceOwnerId => null;
-        public bool AllowAdminOverride => true;
-    }
+    public record AddUserCommand(string Username, string Email, string Password) : IRequest<int>;
 }
