@@ -24,10 +24,12 @@ namespace App.Application.Behaviors
                 var failures = validationResults.SelectMany(r => r.Errors).Where(f => f != null).ToList();
 
                 if (failures.Count != 0)
+                {
                     _logger.LogWarning("Validation failed for {RequestName} with errors: {Errors}",
                         typeof(TRequest).Name,
                         string.Join(", ", failures.Select(f => f.ErrorMessage)));
-                throw new ValidationException(failures);
+                    throw new ValidationException(failures);
+                }
             }
 
             return await next(cancellationToken);
