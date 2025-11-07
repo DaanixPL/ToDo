@@ -36,11 +36,19 @@
 </div>
 
 @code {
+    [Inject]
+    public ISnackbar Snackbar { get; set; }
+
     string email;
     string password;
 
     private async Task LoginUser()
     {
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+        {
+            Snackbar.Add("Oooops, you have empty fields", Severity.Error);
+            return;
+        }
         var user = new
         {
             emailOrUsername = email,

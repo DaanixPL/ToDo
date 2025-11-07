@@ -45,12 +45,20 @@
 </div>
 
 @code {
+    [Inject]
+    public ISnackbar Snackbar { get; set; }
+
     string email;
     string password;
     string username;
 
     private async Task RegisterUser()
     {
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(username))
+        {
+            Snackbar.Add("Oooops, you have empty fields", Severity.Error);
+            return;
+        }
         var user = new
         {
             username = username,

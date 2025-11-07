@@ -41,7 +41,7 @@
                                             <MudCard Class="card mt-3">
                                             <MudInput T="string" Class="mx-10" @bind-Value="item.Title" Text="@item.Title"></MudInput>
                                                 <MudText Align="Align.Center">@item.CreatedAt</MudText>
-                                            <MudInput T="string" Class="mx-10" @bind-Value="item.Description" Text="@item.Description"></MudInput>
+                                            <MudInput T="string" Lines="3" Class="mx-10" @bind-Value="item.Description" Text="@item.Description"></MudInput>
                                                     <div class="flex justify-end">
                                                         <MudButtonGroup Variant="Variant.Text">
                                                             <MudButton OnClick="() => Save(item.Id)">Save</MudButton>
@@ -96,6 +96,8 @@
     public IJSRuntime JSRuntime { get; set; }
     [Inject]
     public NavigationManager NavManager { get; set; }
+    [Inject]
+    public ISnackbar Snackbar { get; set; }
     private List<TodoItem> tasks;
     private string apiKey = "";
     int? isEditing = 0;
@@ -112,7 +114,7 @@
                 NavManager.NavigateTo("/login");
             }
         }
-       
+
         var request = new HttpRequestMessage(HttpMethod.Get, "/api/TodoItems/me");
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 
@@ -251,7 +253,11 @@
     {
         var task = tasks.SingleOrDefault(item => item.Id == id);
         if (task == null) return;
-
+        if (string.IsNullOrEmpty(task.Title) || string.IsNullOrEmpty(task.Description))
+        {
+            Snackbar.Add("Oooops, you have empty fields", Severity.Error);
+            return;
+        }
         var updateCommand = new
         {
             id = task.Id,
