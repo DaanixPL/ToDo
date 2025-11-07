@@ -82,7 +82,7 @@
             DrawerWidthRight = "300px"
         }
     };
-    public async Task IsLogin()
+    private async Task IsLogin()
     {
         var apiKey = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
         var username = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "username");
@@ -147,10 +147,23 @@
     }
     private async Task Logout()
     {
+        var refreshToken = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "refreshToken");
+        if (!string.IsNullOrEmpty(refreshToken))
+        {
+            var revokePayload = new { RefreshToken = refreshToken };
+            var revokeRequest = new HttpRequestMessage(HttpMethod.Post, "/api/Auth/Revoked")
+            {
+             Content = new StringContent(
+             System.Text.Json.JsonSerializer.Serialize(revokePayload),
+             System.Text.Encoding.UTF8,
+             "application/json")
+            };
+            await Http.SendAsync(revokeRequest);
+        }
         await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "authToken");
         await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "refreshToken");
         await JSRuntime.InvokeVoidAsync("localStorage.removeItem", "username");
-
+        
         isLoggedIn = false;
         StateHasChanged();
     }
