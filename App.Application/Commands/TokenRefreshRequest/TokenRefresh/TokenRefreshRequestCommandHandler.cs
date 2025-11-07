@@ -5,7 +5,7 @@ using ToDo.Domain.Abstractions;
 using ToDo.Domain.Entities;
 using MediatR;
 
-namespace App.Application.Commands.TokenRefreshRequest
+namespace App.Application.Commands.TokenRefreshRequest.TokenRefresh
 {
     public class TokenRefreshRequestCommandHandler : IRequestHandler<TokenRefreshRequestCommand, RefreshTokenResponse>
     {
@@ -27,13 +27,13 @@ namespace App.Application.Commands.TokenRefreshRequest
                 throw new UnauthorizedAccessException("Invalid or extinct token.");
             }
 
-            await _unitOfWork.RefreshTokens.RemoveRefreshTokenAsync(oldRefreshToken, cancellationToken);
+            await _unitOfWork.RefreshTokens.RevokeRefreshTokenAsync(oldRefreshToken, cancellationToken);
 
             var user = await _unitOfWork.Users.GetUserByIdAsync(oldRefreshToken.UserId, cancellationToken);
 
             if (user == null)
             {
-                throw new UnauthorizedAccessException("Invalid credentials.");
+                throw new NotFoundException("User", oldRefreshToken.UserId);
             }
 
             var newAccessToken = _tokenGenerator.GenerateAccessToken(user);

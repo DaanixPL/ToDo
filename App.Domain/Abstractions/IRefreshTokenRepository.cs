@@ -6,6 +6,7 @@ namespace ToDo.Domain.Abstractions
     {
         Task AddRefreshTokenAsync(RefreshToken refreshToken, CancellationToken cancellationToken = default);
         Task RemoveRefreshTokenAsync(RefreshToken refreshToken, CancellationToken cancellationToken = default);
+        Task RevokeRefreshTokenAsync(RefreshToken refreshToken, CancellationToken cancellationToken = default);
 
         Task<RefreshToken?> GetByTokenAsync(string refreshToken, CancellationToken cancellationToken = default);
     }

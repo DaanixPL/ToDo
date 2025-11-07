@@ -1,7 +1,7 @@
 ﻿using App.Application.Validators.Extensions;
 using FluentValidation;
 
-namespace App.Application.Commands.TokenRefreshRequest
+namespace App.Application.Commands.TokenRefreshRequest.TokenRefresh
 {
     public class TokenRefreshRequestCommandValidator : AbstractValidator<TokenRefreshRequestCommand>
     {

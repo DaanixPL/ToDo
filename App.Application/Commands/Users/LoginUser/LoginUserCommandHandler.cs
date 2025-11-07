@@ -3,6 +3,7 @@ using App.Application.Responses;
 using ToDo.Domain.Abstractions;
 using ToDo.Domain.Entities;
 using MediatR;
+using App.Application.Validators.Exceptions;
 
 namespace App.Application.Commands.Users.LoginUser
 {
@@ -31,7 +32,7 @@ namespace App.Application.Commands.Users.LoginUser
 
             if (user == null)
             {
-                throw new UnauthorizedAccessException("User is null.");
+                throw new NotFoundException("User", command.EmailOrUsername);
             }
 
             var isValidPassword = BCrypt.Net.BCrypt.Verify(command.Password, user.PasswordHash);

@@ -69,6 +69,7 @@
                 await JSRuntime.InvokeVoidAsync("localStorage.setItem", "refreshToken", loginResult.RefreshToken);
                 await JSRuntime.InvokeVoidAsync("localStorage.setItem", "username", loginResult.Username);
 
+                StateHasChanged();
                 NavManager.NavigateTo("/dashboard");
             }
         }

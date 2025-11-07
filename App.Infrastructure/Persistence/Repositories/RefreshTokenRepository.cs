@@ -29,6 +29,13 @@ namespace App.Infrastructure.Persistence.Repositories
 
             _dbContext.RefreshTokens.Remove(tokenToRemove);
         }
+        public async Task RevokeRefreshTokenAsync(RefreshToken refreshToken, CancellationToken cancellationToken = default)
+        {
+            var tokenToRevoke = await _dbContext.RefreshTokens
+                    .FirstOrDefaultAsync(t => t.Token == refreshToken.Token);
+
+            tokenToRevoke.IsRevoked = true;
+        }
 
         public async Task<RefreshToken?> GetByTokenAsync(string refreshToken, CancellationToken cancellationToken = default)
         {

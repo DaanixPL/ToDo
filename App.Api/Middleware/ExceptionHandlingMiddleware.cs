@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using App.Application.Validators.Exceptions;
 using FluentValidation;
 
 namespace App.Api.Middleware
@@ -38,6 +39,12 @@ namespace App.Api.Middleware
                     break;
                 case ArgumentException:
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    break;
+                case NotFoundException:
+                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                    break;
+                case ForbiddenException:
+                    context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
                     break;
                 case ValidationException validationException:
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;

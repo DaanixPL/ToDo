@@ -82,7 +82,7 @@
             DrawerWidthRight = "300px"
         }
     };
-    private async Task IsLogin()
+    public async Task IsLogin()
     {
         var apiKey = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "authToken");
         var username = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "username");
@@ -98,10 +98,9 @@
         else
         {
             var refreshToken = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "refreshToken");
-            if (refreshToken == null)
+            if (refreshToken == null && apiKey == null)
                 return;
-            else if (apiKey == null)
-                return;
+
             var refreshCommand = new
             {
                 accessToken = apiKey,
@@ -132,7 +131,7 @@
             else
             {
                 isLoggedIn = false;
-                Console.WriteLine("Blad przy refreshToken");
+                Console.WriteLine("Error with refreshToken");
             }
         }
     }
