@@ -3,6 +3,7 @@ using ToDo.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace App.Application.Commands.TodoItems.AddTodoItem
 {
@@ -11,12 +12,14 @@ namespace App.Application.Commands.TodoItems.AddTodoItem
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ILogger<AddTodoItemCommandHandler> _logger;
 
-        public AddTodoItemCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public AddTodoItemCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor, ILogger<AddTodoItemCommandHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
+            _logger = logger;
         }
 
         public async Task<int> Handle(AddTodoItemCommand command, CancellationToken cancellationToken)
@@ -24,15 +27,13 @@ namespace App.Application.Commands.TodoItems.AddTodoItem
             TodoItem todoItem = _mapper.Map<TodoItem>(command);
 
             var user = _httpContextAccessor.HttpContext?.User;
-
-            if (user?.Identity?.IsAuthenticated != true)
-                throw new UnauthorizedAccessException();
-
+               
             todoItem.UserId = int.Parse(user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "0");
 
             await _unitOfWork.TodoItems.AddTodoItemAsync(todoItem);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+            _logger.LogInformation("Todo item with ID {TodoItemId} created by User {UserId}", todoItem.Id, todoItem.UserId);
             return todoItem.Id;
         }
     }

@@ -3,6 +3,7 @@ using ToDo.Domain.Abstractions;
 using ToDo.Domain.Entities;
 using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace App.Application.Commands.TodoItems.UpdateTodoItem
 {
@@ -10,11 +11,13 @@ namespace App.Application.Commands.TodoItems.UpdateTodoItem
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly ILogger<UpdateTodoItemCommandHandler> _logger;
 
-        public UpdateTodoItemCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateTodoItemCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, ILogger<UpdateTodoItemCommandHandler> logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<int> Handle(UpdateTodoItemCommand command, CancellationToken cancellationToken)
@@ -23,6 +26,7 @@ namespace App.Application.Commands.TodoItems.UpdateTodoItem
 
             if (todoItem == null)
             {
+                _logger.LogWarning("Todo item with ID {TodoItemId} not found for update", command.Id);
                 throw new NotFoundException("Todo Item", command.Id);
             }
 
@@ -33,6 +37,7 @@ namespace App.Application.Commands.TodoItems.UpdateTodoItem
                 todoItem.CompletedAt = null;
             }
 
+            _logger.LogInformation("Updating Todo item with ID {TodoItemId}", todoItem.Id);
             await _unitOfWork.TodoItems.UpdateTodoItemAsync(todoItem, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

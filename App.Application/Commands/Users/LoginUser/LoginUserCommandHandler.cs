@@ -4,6 +4,8 @@ using ToDo.Domain.Abstractions;
 using ToDo.Domain.Entities;
 using MediatR;
 using App.Application.Validators.Exceptions;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace App.Application.Commands.Users.LoginUser
 {
@@ -11,11 +13,15 @@ namespace App.Application.Commands.Users.LoginUser
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITokenGeneratorRepository _tokenGenerator;
+        private readonly ILogger<LoginUserCommandHandler> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor = new HttpContextAccessor();
 
-        public LoginUserCommandHandler(IUnitOfWork unitOfWork, ITokenGeneratorRepository tokenGenerator)
+        public LoginUserCommandHandler(IUnitOfWork unitOfWork, ITokenGeneratorRepository tokenGenerator, ILogger<LoginUserCommandHandler> logger, IHttpContextAccessor httpContextAccessor)
         {
             _tokenGenerator = tokenGenerator;
             _unitOfWork = unitOfWork;
+            _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<LoginUserRespone> Handle(LoginUserCommand command, CancellationToken cancellationToken)
@@ -32,6 +38,7 @@ namespace App.Application.Commands.Users.LoginUser
 
             if (user == null)
             {
+                _logger.LogWarning("Login attempt failed. User with identifier {EmailOrUsername} not found.", command.EmailOrUsername);
                 throw new NotFoundException("User", command.EmailOrUsername);
             }
 
@@ -39,6 +46,7 @@ namespace App.Application.Commands.Users.LoginUser
 
             if (!isValidPassword)
             {
+                _logger.LogWarning("Login attempt failed for User ID {UserId} from IP: {RemoteIp}. Invalid password provided.", user.Id, _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress);
                 throw new UnauthorizedAccessException("Invalid Password.");
             }
 
@@ -61,6 +69,8 @@ namespace App.Application.Commands.Users.LoginUser
             await _unitOfWork.RefreshTokens.AddRefreshTokenAsync(refreshTokenEntity, cancellationToken);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            _logger.LogInformation("User ID {UserId} logged in successfully from IP: {RemoteIp}.", user.Id, _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress);
 
             return new LoginUserRespone(user.Id, user.Username, accessToken, refreshToken);
         }
