@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace App.Application.Commands.TodoItems.AddTodoItem
 {
-    public class AddTodoItemCommandHandler : IRequestHandler<AddTodoItemCommand, int>
+    public class AddTodoItemCommandHandler : IRequestHandler<AddTodoItemCommand, TodoItem>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -22,19 +22,25 @@ namespace App.Application.Commands.TodoItems.AddTodoItem
             _logger = logger;
         }
 
-        public async Task<int> Handle(AddTodoItemCommand command, CancellationToken cancellationToken)
+        public async Task<TodoItem> Handle(AddTodoItemCommand command, CancellationToken cancellationToken)
         {
             TodoItem todoItem = _mapper.Map<TodoItem>(command);
 
             var user = _httpContextAccessor.HttpContext?.User;
+            var userIdClaim = user?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            
+            if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out var userId))
+            {
+                throw new UnauthorizedAccessException("User ID not found in token");
+            }
                
-            todoItem.UserId = int.Parse(user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "0");
+            todoItem.UserId = userId;
 
             await _unitOfWork.TodoItems.AddTodoItemAsync(todoItem);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             _logger.LogInformation("Todo item with ID {TodoItemId} created by User {UserId}", todoItem.Id, todoItem.UserId);
-            return todoItem.Id;
+            return todoItem;
         }
     }
 }

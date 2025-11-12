@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace App.Application.Commands.TodoItems.UpdateTodoItem
 {
-    public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemCommand, int>
+    public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemCommand, TodoItem>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -20,7 +20,7 @@ namespace App.Application.Commands.TodoItems.UpdateTodoItem
             _logger = logger;
         }
 
-        public async Task<int> Handle(UpdateTodoItemCommand command, CancellationToken cancellationToken)
+        public async Task<TodoItem> Handle(UpdateTodoItemCommand command, CancellationToken cancellationToken)
         {
             var todoItem = await _unitOfWork.TodoItems.GetTodoItemByIdAsync(command.Id, cancellationToken);
 
@@ -41,7 +41,7 @@ namespace App.Application.Commands.TodoItems.UpdateTodoItem
             await _unitOfWork.TodoItems.UpdateTodoItemAsync(todoItem, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return todoItem.Id;
+            return todoItem;
         }
     }
 }

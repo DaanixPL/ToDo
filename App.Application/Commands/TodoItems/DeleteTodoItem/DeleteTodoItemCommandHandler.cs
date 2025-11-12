@@ -34,7 +34,7 @@ namespace App.Application.Commands.TodoItems.DeleteTodoItem
             await _unitOfWork.TodoItems.DeleteTodoItemAsync(todoItem, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return 1;
+            return todoItem.Id;
         }
     }
 }

@@ -20,19 +20,32 @@ namespace App.Infrastructure.Persistence.Repositories
                 .Include(u => u.RefreshTokens)
                 .FirstOrDefaultAsync(u => u.Id == refreshToken.UserId, cancellationToken);
 
+            if (user == null)
+            {
+                throw new InvalidOperationException($"User with ID {refreshToken.UserId} not found");
+            }
+
             user.RefreshTokens.Add(refreshToken);
         }
         public async Task RemoveRefreshTokenAsync(RefreshToken refreshToken, CancellationToken cancellationToken = default)
         {
             var tokenToRemove = await _dbContext.RefreshTokens
-                    .FirstOrDefaultAsync(t => t.Token == refreshToken.Token);
+                    .FirstOrDefaultAsync(t => t.Token == refreshToken.Token, cancellationToken);
 
-            _dbContext.RefreshTokens.Remove(tokenToRemove);
+            if (tokenToRemove != null)
+            {
+                _dbContext.RefreshTokens.Remove(tokenToRemove);
+            }
         }
         public async Task RevokeRefreshTokenAsync(RefreshToken refreshToken, CancellationToken cancellationToken = default)
         {
             var tokenToRevoke = await _dbContext.RefreshTokens
-                    .FirstOrDefaultAsync(t => t.Token == refreshToken.Token);
+                    .FirstOrDefaultAsync(t => t.Token == refreshToken.Token, cancellationToken);
+
+            if (tokenToRevoke == null)
+            {
+                throw new InvalidOperationException($"Refresh token not found");
+            }
 
             tokenToRevoke.IsRevoked = true;
         }

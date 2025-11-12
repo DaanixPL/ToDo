@@ -18,23 +18,23 @@ namespace App.Api.Controllers
         [HttpPost]                    // POST /api/todoitems
         public async Task<IActionResult> AddTodoItem(AddTodoItemCommand command)
         {
-            await _mediator.Send(command);
-            return NoContent();
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
 
         [Authorize]
         [HttpDelete("{id}")]          // DELETE /api/todoitems/{id}
         public async Task<IActionResult> DeleteTodoItem(int id)
         {
-            await _mediator.Send(new DeleteTodoItemCommand(id));
-            return NoContent();
+            var result = await _mediator.Send(new DeleteTodoItemCommand(id));
+            return Ok(result);
         }
 
         [Authorize]
         [HttpPut("{id}")]             // PUT /api/todoitems/{id}
         public async Task<IActionResult> UpdateTodoItem(int id, UpdateTodoItemCommand command)
         {
-            await _mediator.Send(new UpdateTodoItemCommand
+            var result = await _mediator.Send(new UpdateTodoItemCommand
             {
                 Id = id,
                 Title = command.Title,
@@ -42,7 +42,7 @@ namespace App.Api.Controllers
                 CompletedAt = command.CompletedAt,
                 IsCompleted = command.IsCompleted
             });
-            return NoContent();
+            return Ok(result);
         }
 
         [Authorize]
