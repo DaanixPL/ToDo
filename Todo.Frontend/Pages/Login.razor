@@ -37,10 +37,10 @@
 
 @code {
     [Inject]
-    public ISnackbar Snackbar { get; set; }
+    public required ISnackbar Snackbar { get; set; }
 
-    string email;
-    string password;
+    string? email;
+    string? password;
 
     private async Task LoginUser()
     {

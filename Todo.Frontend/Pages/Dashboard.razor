@@ -50,6 +50,9 @@
                                             </MudCard>
                                         }
                                     }
+                                    <div class="flex justify-end">
+                                        <MudButton Variant="Variant.Text" OnClick="() => AddNewTaskAsync()" >Add</MudButton>
+                                    </div>
                                 </MudExpansionPanels>
                             </MudItem>
                         <MudItem xs="6">
@@ -93,12 +96,14 @@
 
 @code {
     [Inject]
-    public IJSRuntime JSRuntime { get; set; }
+    public required IJSRuntime JSRuntime { get; set; }
     [Inject]
-    public NavigationManager NavManager { get; set; }
+    public required NavigationManager NavManager { get; set; }
     [Inject]
-    public ISnackbar Snackbar { get; set; }
-    private List<TodoItem> tasks;
+    public required ISnackbar Snackbar { get; set; }
+    [Inject]
+    public required MudBlazor.IDialogService DialogService { get; set; }
+    private List<TodoItem> tasks = new List<TodoItem>();
     private string apiKey = "";
     int? isEditing = 0;
 
@@ -123,10 +128,11 @@
         if (response.IsSuccessStatusCode)
         {
             var json = await response.Content.ReadAsStringAsync();
+
             tasks = System.Text.Json.JsonSerializer.Deserialize<List<TodoItem>>(json, new System.Text.Json.JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
-            });
+            }) ?? new List<TodoItem>();
         }
         else
         {
@@ -146,7 +152,7 @@
             isCompleted = true
         };
         var response = await SendRequest(updateCommand, id);
-        if (response)
+        if (response.IsSuccessStatusCode)
         {
             var taskL = tasks.FirstOrDefault(x => x.Id == id);
             if (taskL != null) task.IsCompleted = true;
@@ -171,7 +177,7 @@
             isCompleted = false
         };
         var response = await SendRequest(updateCommand, id);
-        if (response)
+        if (response.IsSuccessStatusCode)
         {
             var taskL = tasks.FirstOrDefault(x => x.Id == id);
             if (taskL != null) task.IsCompleted = false;
@@ -195,10 +201,14 @@
             description = task.Description,
         };
         var response = await SendRequest(updateCommand, id);
-        if (response)
+        if (response.IsSuccessStatusCode)
         {
             var taskL = tasks.FirstOrDefault(x => x.Id == id);
-            if (taskL != null) task.IsCompleted = false;
+            if (taskL != null) 
+            {
+                taskL.Title = task.Title;
+                taskL.Description = task.Description;
+            }
 
             StateHasChanged();
         }
@@ -230,7 +240,7 @@
             Console.WriteLine("BLAD");
         }
     }
-    private async Task<bool> SendRequest<TCommand>(TCommand updateCommand, int id)
+    private async Task<HttpResponseMessage> SendRequest<TCommand>(TCommand updateCommand, int id)
     {
         var request = new HttpRequestMessage(HttpMethod.Put, $"/api/TodoItems/{id}")
         {
@@ -243,7 +253,7 @@
 
         var response = await Http.SendAsync(request);
 
-        return response.IsSuccessStatusCode;
+        return response;
     }
     private void Editing(int id)
     {
@@ -265,14 +275,62 @@
             description = task.Description,
         };
         var response = await SendRequest(updateCommand, id);
-        if (response)
+        if (response.IsSuccessStatusCode)
         {
             isEditing = 0;
+
+
             StateHasChanged();
         }
         else
         {
             Console.WriteLine("BLAD");
+        }
+    }
+    private async Task AddNewTaskAsync()
+    {
+        var parameters = new DialogParameters<AddTask>();
+        var dialog = await DialogService.ShowAsync<AddTask>("Add task", parameters);
+        var result = await dialog.Result;
+
+        if (result != null && !result.Canceled)
+        {
+            if (result.Data != null)
+            {
+                string[] newTasks = (string[])result.Data;
+                var addCommand = new
+                {
+                    title = newTasks[0],
+                    description = newTasks[1],
+                };
+                var request = new HttpRequestMessage(HttpMethod.Post, $"/api/TodoItems")
+                {
+                   Content = new StringContent(
+                   System.Text.Json.JsonSerializer.Serialize(addCommand),
+                   System.Text.Encoding.UTF8,
+                   "application/json")
+                };
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
+
+                var response = await Http.SendAsync(request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+
+                    var newTask = System.Text.Json.JsonSerializer.Deserialize<TodoItem>(json, new System.Text.Json.JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                    if (newTask != null)
+                        tasks.Add(newTask);
+                    StateHasChanged();
+                }
+                else
+                {
+                    Console.WriteLine("Error with data response");
+                }
+            }
         }
     }
 }

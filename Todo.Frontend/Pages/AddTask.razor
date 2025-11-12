@@ -1,0 +1,50 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudField Label="Title" 
+                      Variant="Variant.Outlined"
+                      FullWidth="true">
+            <MudInput @bind-Value="title" Class="full" />
+        </MudField>
+        <MudField Label="Description"
+                  Variant="Variant.Outlined"
+                  FullWidth="true">
+            <MudInput @bind-Value="description" Class="full" />
+        </MudField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">ADD</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    public required IMudDialogInstance MudDialog { get; set; }
+    [Inject]
+    public required ISnackbar Snackbar { get; set; }
+
+    string? title;
+    string? description;
+
+    public string[] GetData()
+    {
+        if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description))
+        {
+            return Array.Empty<string>();
+        }
+        return new string[] { title, description };
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private void Submit()
+    {
+        if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description))
+        {
+            Snackbar.Add("Oooops, you have empty fields", Severity.Error);
+            return;
+        }
+        var result = GetData();
+        MudDialog.Close(DialogResult.Ok(result));
+    }
+}
