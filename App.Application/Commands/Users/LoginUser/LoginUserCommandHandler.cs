@@ -1,13 +1,13 @@
-﻿using App.Application.Interfaces.Authentication;
-using App.Application.Responses;
-using ToDo.Domain.Abstractions;
+﻿using ToDo.Domain.Abstractions;
 using ToDo.Domain.Entities;
 using MediatR;
-using App.Application.Validators.Exceptions;
+using ToDo.Application.Validators.Exceptions;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using ToDo.Application.Interfaces.Authentication;
+using ToDo.Application.Responses;
 
-namespace App.Application.Commands.Users.LoginUser
+namespace ToDo.Application.Commands.Users.LoginUser
 {
     public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUserRespone>
     {

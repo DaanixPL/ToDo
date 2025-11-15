@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace App.Application.Commands.TodoItems.AddTodoItem
+namespace ToDo.Application.Commands.TodoItems.AddTodoItem
 {
     public class AddTodoItemCommandHandler : IRequestHandler<AddTodoItemCommand, TodoItem>
     {

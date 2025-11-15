@@ -1,4 +1,4 @@
-﻿namespace App.Application.Validators.Exceptions
+﻿namespace ToDo.Application.Validators.Exceptions
 {
     public class NotFoundException : Exception
     {

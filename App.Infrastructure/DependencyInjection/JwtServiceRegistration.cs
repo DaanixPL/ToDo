@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Security.Claims;
 
-namespace App.Infrastructure.DependencyInjection;
+namespace ToDo.Infrastructure.DependencyInjection;
 
 public static class JwtServiceRegistration
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace App.Infrastructure.DependencyInjection
+namespace ToDo.Infrastructure.DependencyInjection
 {
     public static class SwaggerServiceRegistration
     {

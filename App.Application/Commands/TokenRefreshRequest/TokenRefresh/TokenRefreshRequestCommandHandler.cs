@@ -1,12 +1,12 @@
-﻿using App.Application.Interfaces.Authentication;
-using App.Application.Responses;
-using App.Application.Validators.Exceptions;
+﻿using ToDo.Application.Validators.Exceptions;
 using ToDo.Domain.Abstractions;
 using ToDo.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using ToDo.Application.Interfaces.Authentication;
+using ToDo.Application.Responses;
 
-namespace App.Application.Commands.TokenRefreshRequest.TokenRefresh
+namespace ToDo.Application.Commands.TokenRefreshRequest.TokenRefresh
 {
     public class TokenRefreshRequestCommandHandler : IRequestHandler<TokenRefreshRequestCommand, RefreshTokenResponse>
     {

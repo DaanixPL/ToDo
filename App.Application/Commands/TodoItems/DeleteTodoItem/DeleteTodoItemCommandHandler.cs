@@ -1,10 +1,10 @@
-﻿using App.Application.Validators.Exceptions;
+﻿using ToDo.Application.Validators.Exceptions;
 using ToDo.Domain.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace App.Application.Commands.TodoItems.DeleteTodoItem
+namespace ToDo.Application.Commands.TodoItems.DeleteTodoItem
 {
     public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemCommand, int>
     {

@@ -1,7 +1,7 @@
-﻿using App.Application.Validators.Extensions;
-using FluentValidation;
+﻿using FluentValidation;
+using ToDo.Application.Validators.Extensions;
 
-namespace App.Application.Queries.TodoItems.GetTodoItem.ByUserId
+namespace ToDo.Application.Queries.TodoItems.GetTodoItem.ByUserId
 {
     public class GetTodoItemsByUserIdQueryValidator : AbstractValidator<GetTodoItemsByUserIdQuery>
     {

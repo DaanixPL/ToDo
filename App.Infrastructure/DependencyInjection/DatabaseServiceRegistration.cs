@@ -1,9 +1,9 @@
-﻿using App.Infrastructure.Persistence.Data.Context;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ToDo.Infrastructure.Persistence.Data.DbContexts;
 
-namespace App.Infrastructure.DependencyInjection
+namespace ToDo.Infrastructure.DependencyInjection
 {
     public static class DatabaseServiceRegistration
     {

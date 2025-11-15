@@ -1,8 +1,8 @@
-﻿using App.Application.Interfaces.Authorizable;
-using App.Application.Responses;
+﻿using ToDo.Application.Interfaces.Authorizable;
 using MediatR;
+using ToDo.Application.Responses;
 
-namespace App.Application.Commands.Users.LoginUser
+namespace ToDo.Application.Commands.Users.LoginUser
 {
     public record LoginUserCommand(string EmailOrUsername, string Password) : IRequest<LoginUserRespone>;
 }

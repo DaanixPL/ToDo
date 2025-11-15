@@ -1,12 +1,12 @@
-﻿using App.Application.Interfaces.Authorizable;
-using App.Application.Validators.Exceptions;
+﻿using ToDo.Application.Validators.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
+using ToDo.Application.Interfaces.Authorizable;
 using ToDo.Domain.Entities;
 
-namespace App.Application.Behaviors
+namespace ToDo.Application.Behaviors
 {
     public class AuthorizationBehavior<TRequest, TRespons> : IPipelineBehavior<TRequest, TRespons>
         where TRequest : notnull

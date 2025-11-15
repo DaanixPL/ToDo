@@ -1,9 +1,9 @@
 using System.Net;
 using System.Text.Json;
-using App.Application.Validators.Exceptions;
 using FluentValidation;
+using ToDo.Application.Validators.Exceptions;
 
-namespace App.Api.Middleware
+namespace ToDo.Api.Middleware
 {
     public class ExceptionHandlingMiddleware
     {

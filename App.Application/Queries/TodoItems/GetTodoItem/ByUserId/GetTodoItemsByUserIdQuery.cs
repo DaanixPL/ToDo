@@ -1,8 +1,8 @@
-﻿using App.Application.Interfaces.Authorizable;
-using ToDo.Domain.Entities;
+﻿using ToDo.Domain.Entities;
 using MediatR;
+using ToDo.Application.Interfaces.Authorizable;
 
-namespace App.Application.Queries.TodoItems.GetTodoItem.ByUserId
+namespace ToDo.Application.Queries.TodoItems.GetTodoItem.ByUserId
 {
     public record GetTodoItemsByUserIdQuery(int UserId) : IRequest<IEnumerable<TodoItem>>, IAuthorizableRequest
     {

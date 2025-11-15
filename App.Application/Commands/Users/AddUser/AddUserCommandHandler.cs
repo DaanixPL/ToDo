@@ -4,7 +4,7 @@ using MediatR;
 using ToDo.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace App.Application.Commands.Users.AddUser
+namespace ToDo.Application.Commands.Users.AddUser
 {
     public class AddUserCommandHandler : IRequestHandler<AddUserCommand, int>
     {

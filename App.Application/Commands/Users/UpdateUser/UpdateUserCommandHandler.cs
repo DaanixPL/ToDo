@@ -1,10 +1,10 @@
-﻿using App.Application.Validators.Exceptions;
+﻿using ToDo.Application.Validators.Exceptions;
 using ToDo.Domain.Abstractions;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace App.Application.Commands.Users.UpdateUser
+namespace ToDo.Application.Commands.Users.UpdateUser
 {
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, int>
     {

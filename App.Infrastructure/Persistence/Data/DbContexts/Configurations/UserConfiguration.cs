@@ -2,7 +2,7 @@ using ToDo.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace App.Infrastructure.Persistence.Data.Context.Configurations
+namespace ToDo.Infrastructure.Persistence.Data.DbContexts.Configurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {

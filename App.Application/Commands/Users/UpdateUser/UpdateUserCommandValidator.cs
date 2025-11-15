@@ -1,9 +1,9 @@
-﻿using App.Application.Commands.Users.AddUser;
-using App.Application.Commands.Users.DeleteUser;
-using App.Application.Validators.Extensions;
+﻿using ToDo.Application.Commands.Users.AddUser;
+using ToDo.Application.Commands.Users.DeleteUser;
 using FluentValidation;
+using ToDo.Application.Validators.Extensions;
 
-namespace App.Application.Commands.Users.UpdateUser
+namespace ToDo.Application.Commands.Users.UpdateUser
 {
     public class UpdateUserCommandValidator : AbstractValidator<UpdateUserCommand>
     {

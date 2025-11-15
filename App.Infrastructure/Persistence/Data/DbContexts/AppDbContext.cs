@@ -1,7 +1,7 @@
 ﻿using ToDo.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace App.Infrastructure.Persistence.Data.Context
+namespace ToDo.Infrastructure.Persistence.Data.DbContexts
 {
     public class AppDbContext : DbContext
     {

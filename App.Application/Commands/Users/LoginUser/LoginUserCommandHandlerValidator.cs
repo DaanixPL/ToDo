@@ -1,8 +1,8 @@
-﻿using App.Application.Commands.Users.AddUser;
-using App.Application.Validators.Extensions;
-using FluentValidation;
+﻿using FluentValidation;
+using ToDo.Application.Commands.Users.AddUser;
+using ToDo.Application.Validators.Extensions;
 
-namespace App.Application.Commands.Users.LoginUser
+namespace ToDo.Application.Commands.Users.LoginUser
 {
     public class LoginUserCommandHandlerValidator : AbstractValidator<LoginUserCommand>
     {

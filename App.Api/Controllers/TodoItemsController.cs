@@ -1,13 +1,13 @@
-﻿using App.Application.Commands.TodoItems.AddTodoItem;
-using App.Application.Commands.TodoItems.DeleteTodoItem;
-using App.Application.Commands.TodoItems.UpdateTodoItem;
-using App.Application.Queries.TodoItems.GetTodoItem.ById;
-using App.Application.Queries.TodoItems.GetTodoItem.ByUserId;
+﻿using ToDo.Application.Commands.TodoItems.DeleteTodoItem;
+using ToDo.Application.Queries.TodoItems.GetTodoItem.ById;
+using ToDo.Application.Queries.TodoItems.GetTodoItem.ByUserId;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ToDo.Application.Commands.TodoItems.AddTodoItem;
+using ToDo.Application.Commands.TodoItems.UpdateTodoItem;
 
-namespace App.Api.Controllers
+namespace ToDo.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

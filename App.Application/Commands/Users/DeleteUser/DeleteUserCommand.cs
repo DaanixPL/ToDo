@@ -1,7 +1,7 @@
-﻿using App.Application.Interfaces.Authorizable;
-using MediatR;
+﻿using MediatR;
+using ToDo.Application.Interfaces.Authorizable;
 
-namespace App.Application.Commands.Users.DeleteUser
+namespace ToDo.Application.Commands.Users.DeleteUser
 {
     public record DeleteUserCommand(int UserId) : IRequest<int>, IAuthorizableRequest
     {

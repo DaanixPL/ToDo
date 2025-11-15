@@ -1,4 +1,17 @@
-﻿.app-background {
+﻿body, html {
+    font-family: "Rubik", sans-serif !important;
+}
+.mud-theme-default {
+    font-family: "Rubik", sans-serif;
+}
+.mud-typography,
+.mud-input,
+.mud-button-label,
+input, textarea, select, button {
+    font-family: "Rubik", sans-serif;
+}
+
+.app-background {
     min-height: 100vh;
     width: 100%;
     background-image: 
@@ -32,17 +45,21 @@
     -webkit-backdrop-filter: blur(10px);
 }
 
-.navbar .logo {
-    font-size: 1.5rem;
+.navbar .logo .mud-button-label {
+    /* Podstawowe style logo */
+    font-family: 'Pacifico', cursive;
+    font-size: 2rem;
     font-weight: 400;
+    text-shadow: 0 0 10px rgba(138, 107, 255, 0.5);
 }
+
 .card {
-    background-color: rgb(0, 0, 0, 0.1);
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+background-color: rgb(0, 0, 0, 0.1);
+border: none;
+border-radius: 10px;
+box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
 }
 .login-wrapper {
     display: flex;

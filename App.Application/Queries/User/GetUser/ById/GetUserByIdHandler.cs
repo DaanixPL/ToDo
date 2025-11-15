@@ -1,11 +1,11 @@
-﻿using App.Application.Validators.Exceptions;
+﻿using ToDo.Application.Validators.Exceptions;
 using ToDo.Domain.Abstractions;
-using App.Domain.DTOs;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using ToDo.Application.DTOs;
 
-namespace App.Application.Queries.User.GetUser.ById
+namespace ToDo.Application.Queries.User.GetUser.ById
 {
     public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, UserDto>
     {

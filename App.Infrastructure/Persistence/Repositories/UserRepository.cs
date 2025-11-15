@@ -1,9 +1,9 @@
 ﻿using ToDo.Domain.Abstractions;
 using ToDo.Domain.Entities;
-using App.Infrastructure.Persistence.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using ToDo.Infrastructure.Persistence.Data.DbContexts;
 
-namespace App.Infrastructure.Persistence.Repositories
+namespace ToDo.Infrastructure.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {

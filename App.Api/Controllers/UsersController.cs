@@ -1,15 +1,15 @@
-﻿using App.Application.Commands.Users.AddUser;
-using App.Application.Commands.Users.DeleteUser;
-using App.Application.Commands.Users.LoginUser;
-using App.Application.Commands.Users.UpdateUser;
-using App.Application.Queries.User.GetUser.ByEmail;
-using App.Application.Queries.User.GetUser.ById;
-using App.Application.Queries.User.GetUser.ByUsername;
+﻿using ToDo.Application.Commands.Users.DeleteUser;
+using ToDo.Application.Queries.User.GetUser.ByEmail;
+using ToDo.Application.Queries.User.GetUser.ById;
+using ToDo.Application.Queries.User.GetUser.ByUsername;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ToDo.Application.Commands.Users.AddUser;
+using ToDo.Application.Commands.Users.LoginUser;
+using ToDo.Application.Commands.Users.UpdateUser;
 
-namespace App.Api.Controllers
+namespace ToDo.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

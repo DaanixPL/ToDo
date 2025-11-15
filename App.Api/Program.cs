@@ -1,10 +1,10 @@
-using App.Api.Middleware;
-using App.Application.Behaviors;
-using App.Application.DependencyInjection;
-using App.Infrastructure.DependencyInjection;
 using MediatR;
+using ToDo.Api.Middleware;
+using ToDo.Application.Behaviors;
+using ToDo.Application.DependencyInjection;
+using ToDo.Infrastructure.DependencyInjection;
 
-namespace App.Api
+namespace ToDo.Api
 {
     public class Program
     {

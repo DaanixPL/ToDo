@@ -1,8 +1,8 @@
-﻿using App.Application.Validators.Extensions;
-using ToDo.Domain.Abstractions;
+﻿using ToDo.Domain.Abstractions;
 using FluentValidation;
+using ToDo.Application.Validators.Extensions;
 
-namespace App.Application.Commands.Users.AddUser
+namespace ToDo.Application.Commands.Users.AddUser
 {
     public class AddUserCommandValidator : AbstractValidator<AddUserCommand>
     {

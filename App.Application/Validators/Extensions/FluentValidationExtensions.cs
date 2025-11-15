@@ -1,9 +1,9 @@
-﻿using App.Application.Validators.ValidationMessages;
-using FluentValidation;
+﻿using FluentValidation;
 using System.Globalization;
 using System.Threading;
+using ToDo.Application.Validators.ValidationMessages;
 
-namespace App.Application.Validators.Extensions
+namespace ToDo.Application.Validators.Extensions
 {
     public static class FluentValidationExtensions
     {
@@ -20,19 +20,19 @@ namespace App.Application.Validators.Extensions
                 .NotEmpty()
                 .WithMessage(ValidationMessage.Required(fieldName));
         }
-        public static IRuleBuilderOptions<T, string> MaxLength<T>(this IRuleBuilder<T, string> ruleBuilder, string fieldName, int max)
+        public static IRuleBuilderOptions<T, string?> MaxLength<T>(this IRuleBuilder<T, string?> ruleBuilder, string fieldName, int max)
         {
             return ruleBuilder
                 .MaximumLength(max)
                 .WithMessage(ValidationMessage.TooLong(fieldName, max));
         }
-        public static IRuleBuilderOptions<T, string> MinLength<T>(this IRuleBuilder<T, string> ruleBuilder, string fieldName, int min)
+        public static IRuleBuilderOptions<T, string?> MinLength<T>(this IRuleBuilder<T, string?> ruleBuilder, string fieldName, int min)
         {
             return ruleBuilder
                 .MinimumLength(min)
                 .WithMessage(ValidationMessage.TooShort(fieldName, min));
         }
-        public static IRuleBuilderOptions<T, string> EmailFormat<T>(this IRuleBuilder<T, string> ruleBuilder, string fieldName)
+        public static IRuleBuilderOptions<T, string?> EmailFormat<T>(this IRuleBuilder<T, string?> ruleBuilder, string fieldName)
         {
             return ruleBuilder
                 .EmailAddress()
@@ -63,7 +63,7 @@ namespace App.Application.Validators.Extensions
         //        })
         //        .WithMessage(ValidationMessage.InvalidDate(fieldName));
         //}
-        public static IRuleBuilderOptions<T, string> NoWhiteSpaces<T>(this IRuleBuilder<T, string> ruleBuilder, string fieldName)
+        public static IRuleBuilderOptions<T, string?> NoWhiteSpaces<T>(this IRuleBuilder<T, string?> ruleBuilder, string fieldName)
         {
             return ruleBuilder
                 .Must(value => value != null && !value.Any(char.IsWhiteSpace))

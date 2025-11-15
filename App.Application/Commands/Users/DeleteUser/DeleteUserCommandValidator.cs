@@ -1,8 +1,8 @@
-﻿using App.Application.Commands.Users.AddUser;
-using App.Application.Validators.Extensions;
+﻿using ToDo.Application.Commands.Users.AddUser;
 using FluentValidation;
+using ToDo.Application.Validators.Extensions;
 
-namespace App.Application.Commands.Users.DeleteUser
+namespace ToDo.Application.Commands.Users.DeleteUser
 {
     public class DeleteUserCommandValidator : AbstractValidator<DeleteUserCommand>
     {

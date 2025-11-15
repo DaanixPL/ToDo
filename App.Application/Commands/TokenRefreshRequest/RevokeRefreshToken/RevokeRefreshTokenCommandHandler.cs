@@ -1,10 +1,10 @@
-﻿using App.Application.Validators.Exceptions;
+﻿using ToDo.Application.Validators.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Logging;
 using ToDo.Domain.Abstractions;
 
-namespace App.Application.Commands.TokenRefreshRequest.RevokeRefreshToken
+namespace ToDo.Application.Commands.TokenRefreshRequest.RevokeRefreshToken
 {
     public class RevokeRefreshTokenCommandHandler : IRequestHandler<RevokeRefreshTokenCommand, Unit>
     {

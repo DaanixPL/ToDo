@@ -1,7 +1,7 @@
-﻿using App.Application.Validators.Extensions;
-using FluentValidation;
+﻿using FluentValidation;
+using ToDo.Application.Validators.Extensions;
 
-namespace App.Application.Commands.TodoItems.DeleteTodoItem
+namespace ToDo.Application.Commands.TodoItems.DeleteTodoItem
 {
     public class DeleteTodoItemCommandValidator : AbstractValidator<DeleteTodoItemCommand>
     {

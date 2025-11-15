@@ -1,10 +1,10 @@
-﻿using App.Application.Validators.Exceptions;
+﻿using ToDo.Application.Validators.Exceptions;
 using ToDo.Domain.Abstractions;
 using ToDo.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace App.Application.Queries.TodoItems.GetTodoItem.ById
+namespace ToDo.Application.Queries.TodoItems.GetTodoItem.ById
 {
     public class GetTodoItemByIdQueryHandler : IRequestHandler<GetTodoItemByIdQuery, TodoItem>
     {

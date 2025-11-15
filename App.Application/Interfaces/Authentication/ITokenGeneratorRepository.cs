@@ -1,6 +1,6 @@
 ﻿using ToDo.Domain.Entities;
 
-namespace App.Application.Interfaces.Authentication
+namespace ToDo.Application.Interfaces.Authentication
 {
     public interface ITokenGeneratorRepository
     {

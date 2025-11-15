@@ -1,7 +1,7 @@
-﻿using App.Application.Interfaces.Authorizable;
-using MediatR;
+﻿using MediatR;
+using ToDo.Application.Interfaces.Authorizable;
 
-namespace App.Application.Commands.Users.UpdateUser
+namespace ToDo.Application.Commands.Users.UpdateUser
 {
     public class UpdateUserCommand : IRequest<int>, IAuthorizableRequest
     {

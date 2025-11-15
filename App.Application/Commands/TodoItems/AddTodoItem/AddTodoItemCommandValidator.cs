@@ -1,7 +1,7 @@
-﻿using App.Application.Validators.Extensions;
-using FluentValidation;
+﻿using FluentValidation;
+using ToDo.Application.Validators.Extensions;
 
-namespace App.Application.Commands.TodoItems.AddTodoItem
+namespace ToDo.Application.Commands.TodoItems.AddTodoItem
 {
     public class AddTodoItemCommandValidator : AbstractValidator<AddTodoItemCommand>
     {

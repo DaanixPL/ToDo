@@ -1,9 +1,9 @@
-﻿using App.Application.Commands.TokenRefreshRequest.TokenRefresh;
-using App.Application.Commands.TokenRefreshRequest.RevokeRefreshToken;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ToDo.Application.Commands.TokenRefreshRequest.RevokeRefreshToken;
+using ToDo.Application.Commands.TokenRefreshRequest.TokenRefresh;
 
-namespace App.Api.Controllers
+namespace ToDo.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

@@ -1,7 +1,7 @@
-﻿using App.Application.Validators.Extensions;
-using FluentValidation;
+﻿using FluentValidation;
+using ToDo.Application.Validators.Extensions;
 
-namespace App.Application.Queries.User.GetUser.ByUsername
+namespace ToDo.Application.Queries.User.GetUser.ByUsername
 {
     public class GetUserByUsernameQueryValidator : AbstractValidator<GetUserByUsernameQuery>
     {

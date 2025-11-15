@@ -1,4 +1,4 @@
-﻿namespace App.Application.Validators.ValidationMessages
+﻿namespace ToDo.Application.Validators.ValidationMessages
 {
     public static class ValidationMessage
     {

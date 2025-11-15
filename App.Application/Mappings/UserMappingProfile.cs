@@ -1,10 +1,10 @@
-﻿using App.Application.Commands.Users.AddUser;
-using App.Application.Commands.Users.UpdateUser;
-using App.Domain.DTOs;
-using ToDo.Domain.Entities;
+﻿using ToDo.Domain.Entities;
 using AutoMapper;
+using ToDo.Application.DTOs;
+using ToDo.Application.Commands.Users.AddUser;
+using ToDo.Application.Commands.Users.UpdateUser;
 
-namespace App.Application.Mappings
+namespace ToDo.Application.Mappings
 {
     public class UserMappingProfile : Profile
     {

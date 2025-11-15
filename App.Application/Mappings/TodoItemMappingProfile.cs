@@ -1,9 +1,9 @@
-﻿using App.Application.Commands.TodoItems.AddTodoItem;
-using ToDo.Domain.Entities;
+﻿using ToDo.Domain.Entities;
 using AutoMapper;
-using App.Application.Commands.TodoItems.UpdateTodoItem;
+using ToDo.Application.Commands.TodoItems.UpdateTodoItem;
+using ToDo.Application.Commands.TodoItems.AddTodoItem;
 
-namespace App.Application.Mappings
+namespace ToDo.Application.Mappings
 {
     public class TodoItemMappingProfile : Profile
     {

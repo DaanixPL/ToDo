@@ -1,8 +1,8 @@
-﻿using App.Application.Interfaces.Authorizable;
-using MediatR;
+﻿using MediatR;
+using ToDo.Application.Interfaces.Authorizable;
 using ToDo.Domain.Entities;
 
-namespace App.Application.Commands.TodoItems.UpdateTodoItem
+namespace ToDo.Application.Commands.TodoItems.UpdateTodoItem
 {
     public class UpdateTodoItemCommand : IRequest<TodoItem>, IAuthorizableRequest
     {

@@ -1,4 +1,4 @@
-﻿namespace App.Application.Interfaces.Authorizable
+﻿namespace ToDo.Application.Interfaces.Authorizable
 {
     public interface IAuthorizableRequest
     {

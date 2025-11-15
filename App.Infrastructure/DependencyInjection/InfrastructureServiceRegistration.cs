@@ -1,12 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ToDo.Domain.Abstractions;
 using Microsoft.Extensions.Configuration;
-using App.Infrastructure.Persistence.Repositories;
-using App.Application.Interfaces.Authentication;
+using ToDo.Application.Interfaces.Authentication;
+using ToDo.Infrastructure.Persistence.Repositories;
 
-
-
-namespace App.Infrastructure.DependencyInjection
+namespace ToDo.Infrastructure.DependencyInjection
 {
     public static class InfrastructureServiceRegistration
     {

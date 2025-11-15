@@ -1,8 +1,8 @@
-﻿using App.Application.Interfaces.Authorizable;
-using App.Domain.DTOs;
-using MediatR;
+﻿using MediatR;
+using ToDo.Application.DTOs;
+using ToDo.Application.Interfaces.Authorizable;
 
-namespace App.Application.Queries.User.GetUser.ByUsername
+namespace ToDo.Application.Queries.User.GetUser.ByUsername
 {
     public record GetUserByUsernameQuery(string Username) : IRequest<UserDto>, IAuthorizableRequest
     {

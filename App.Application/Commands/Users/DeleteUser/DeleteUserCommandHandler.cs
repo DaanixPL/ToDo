@@ -1,9 +1,9 @@
-﻿using App.Application.Validators.Exceptions;
+﻿using ToDo.Application.Validators.Exceptions;
 using ToDo.Domain.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace App.Application.Commands.Users.DeleteUser
+namespace ToDo.Application.Commands.Users.DeleteUser
 {
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, int>
     {

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Application", "App.Application\App.Application.csproj", "{3DBED2CB-DA0A-4B61-B801-08C6E19A7B18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Application", "App.Application\ToDo.Application.csproj", "{3DBED2CB-DA0A-4B61-B801-08C6E19A7B18}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Domain", "App.Domain\ToDo.Domain.csproj", "{78BF2F41-6BDF-4B6D-BED2-1913CE296D34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Infrastructure", "App.Infrastructure\App.Infrastructure.csproj", "{D6731196-B7C3-4126-98BD-0168593107FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Infrastructure", "App.Infrastructure\ToDo.Infrastructure.csproj", "{D6731196-B7C3-4126-98BD-0168593107FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Api", "App.Api\App.Api.csproj", "{CCB5F4A9-8E0C-4F34-9BE6-365B58A9218C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Api", "App.Api\ToDo.Api.csproj", "{CCB5F4A9-8E0C-4F34-9BE6-365B58A9218C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject

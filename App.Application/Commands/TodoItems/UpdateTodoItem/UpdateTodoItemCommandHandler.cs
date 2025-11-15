@@ -1,11 +1,11 @@
-﻿using App.Application.Validators.Exceptions;
+﻿using ToDo.Application.Validators.Exceptions;
 using ToDo.Domain.Abstractions;
 using ToDo.Domain.Entities;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace App.Application.Commands.TodoItems.UpdateTodoItem
+namespace ToDo.Application.Commands.TodoItems.UpdateTodoItem
 {
     public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemCommand, TodoItem>
     {

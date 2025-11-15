@@ -1,7 +1,7 @@
 ﻿using ToDo.Domain.Abstractions;
-using App.Infrastructure.Persistence.Data.Context;
+using ToDo.Infrastructure.Persistence.Data.DbContexts;
 
-namespace App.Infrastructure.Persistence.Repositories
+namespace ToDo.Infrastructure.Persistence.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {

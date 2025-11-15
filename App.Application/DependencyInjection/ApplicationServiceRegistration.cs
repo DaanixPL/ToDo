@@ -1,12 +1,12 @@
-﻿using App.Application.Behaviors;
-using App.Application.Commands.Users.AddUser;
-using App.Application.Mappings;
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using ToDo.Application.Behaviors;
+using ToDo.Application.Commands.Users.AddUser;
+using ToDo.Application.Mappings;
 
-namespace App.Application.DependencyInjection
+namespace ToDo.Application.DependencyInjection
 {
     public static class ApplicationServiceRegistration
     {

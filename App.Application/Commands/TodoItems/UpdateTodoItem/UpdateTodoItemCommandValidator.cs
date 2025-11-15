@@ -1,9 +1,9 @@
-﻿using App.Application.Commands.TodoItems.AddTodoItem;
-using App.Application.Commands.Users.UpdateUser;
-using App.Application.Validators.Extensions;
+﻿using ToDo.Application.Commands.TodoItems.AddTodoItem;
+using ToDo.Application.Commands.Users.UpdateUser;
 using FluentValidation;
+using ToDo.Application.Validators.Extensions;
 
-namespace App.Application.Commands.TodoItems.UpdateTodoItem
+namespace ToDo.Application.Commands.TodoItems.UpdateTodoItem
 {
     public class UpdateTodoItemCommandValidator : AbstractValidator<UpdateTodoItemCommand>
     {
