@@ -51,7 +51,7 @@
 
 @code {
     [Inject]
-    public IJSRuntime JSRuntime { get; set; }
+    public required IJSRuntime JSRuntime { get; set; }
     private bool _isDarkMode = true;
     private bool isLoggedIn = false;
     private char firstLeatterUsername;
