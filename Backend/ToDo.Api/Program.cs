@@ -1,4 +1,6 @@
 using MediatR;
+using Microsoft.Extensions.Configuration.Json;
+using ToDo.Api.Configuration;
 using ToDo.Api.Middleware;
 using ToDo.Application.Behaviors;
 using ToDo.Application.DependencyInjection;
@@ -11,6 +13,29 @@ namespace ToDo.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var jsonSource = new JsonConfigurationSource
+            {
+                Path = "appsettings.json",
+                Optional = false,
+                ReloadOnChange = true
+            };
+            builder.Configuration.Sources.Add(
+                new EnvironmentSubstitutionSource(jsonSource)
+            );
+
+            var envJsonSource = new JsonConfigurationSource
+            {
+                Path = $"appsettings.{builder.Environment.EnvironmentName}.json",
+                Optional = true,
+                ReloadOnChange = true
+            };
+            builder.Configuration.Sources.Add(
+                new EnvironmentSubstitutionSource(envJsonSource)
+            );
+
+            builder.Configuration.AddEnvironmentVariables();
+
             var configuration = builder.Configuration;
 
             builder.Services.AddControllers();
