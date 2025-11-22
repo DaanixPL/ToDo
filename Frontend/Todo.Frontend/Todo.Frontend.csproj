@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\App.Domain\ToDo.Domain.csproj" />
+    <ProjectReference Include="..\..\Backend\ToDo.Domain\ToDo.Domain.csproj" />
   </ItemGroup>
 
 </Project>

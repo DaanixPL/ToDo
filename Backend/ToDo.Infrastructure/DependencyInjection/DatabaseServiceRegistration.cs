@@ -7,7 +7,7 @@ namespace ToDo.Infrastructure.DependencyInjection
 {
     public static class DatabaseServiceRegistration
     {
-        public static IServiceCollection AddDatabaseServices(this IServiceCollection services, IConfiguration configuration, string)
+        public static IServiceCollection AddDatabaseServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(options =>
             options.UseMySql(configuration.GetConnectionString("DefaultConnection"),
