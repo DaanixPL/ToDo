@@ -14,9 +14,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{6E769F02-3F6F-40C4-A34D-7D6BD9CB8085}"
-	ProjectSection(SolutionItems) = preProject
-		build.sh = build.sh
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Frontend", "Frontend\Todo.Frontend\Todo.Frontend.csproj", "{0A5FAD9A-6AC5-F230-19CF-E8A3369562AD}"
 EndProject
