@@ -5,9 +5,9 @@ echo "=========================================="
 echo "   Building Todo.Frontend for Render"
 echo "=========================================="
 
-# Install .NET SDK 8.0
-echo "Installing .NET SDK 8.0..."
-curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 8.0
+# Install .NET SDK 9.0
+echo "Installing .NET SDK 9.0..."
+curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 9.0
 
 # Add .NET to PATH
 export DOTNET_ROOT=$HOME/.dotnet
@@ -20,7 +20,7 @@ dotnet --version
 
 # Install wasm-tools workload
 echo "Installing wasm-tools workload..."
-dotnet workload install wasm-tools
+dotnet workload install wasm-tools --skip-sign-check
 
 # Verify workloads
 echo "Installed workloads:"
