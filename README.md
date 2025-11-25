@@ -18,8 +18,6 @@ A production-ready reference solution that combines a **Clean Architecture back 
 11. [Testing & Quality](#testing--quality)
 12. [Configuration Reference](#configuration-reference)
 13. [Troubleshooting & Tips](#troubleshooting--tips)
-14. [Roadmap Ideas](#roadmap-ideas)
-
 ---
 
 ## Solution at a Glance
@@ -44,26 +42,79 @@ A production-ready reference solution that combines a **Clean Architecture back 
 **Front End**
 - Blazor WebAssembly (`Todo.Frontend`)
 - MudBlazor component library
+- Tailwind
 - Local storage for token persistence
 - HttpClient with JWT bearer injection
 
 **Tooling & Operations**
 - Docker & docker-compose (API + SQL Server)
 - dotnet-ef migrations
-- xUnit-based tests (`App.Application.Tests`)
 
 ---
 
 ## Solution Structure
 ```
-AppTemplate
-├── App.Api/                // ASP.NET Core entry point, controllers, middleware, DI
-├── App.Application/        // CQRS commands, queries, handlers, DTOs, behaviors
-├── App.Domain/             // Entities (User, TodoItem, RefreshToken) + repository abstractions
-├── App.Infrastructure/     // EF Core DbContext, repositories, JWT, CORS, Swagger, DI
-├── App.Application.Tests/  // Unit tests targeting application layer
-├── Todo.Frontend/          // Blazor WebAssembly client using MudBlazor
-└── Docker/                 // Dockerfile + docker-compose setup (API + SQL Server)
+ToDo
+├───Backend
+│   ├───ToDo.Api  // ASP.NET Core entry point, controllers, middleware, DI
+│   │   ├───Controllers
+│   │   ├───Middleware
+│   │   └───Properties
+│   ├───ToDo.Application  // CQRS commands, queries, handlers, DTOs, behaviors
+│   │   ├───Behaviors
+│   │   ├───Commands
+│   │   │   ├───TodoItems
+│   │   │   │   ├───AddTodoItem
+│   │   │   │   ├───DeleteTodoItem
+│   │   │   │   └───UpdateTodoItem
+│   │   │   ├───TokenRefreshRequest
+│   │   │   │   ├───RevokeRefreshToken
+│   │   │   │   └───TokenRefresh
+│   │   │   └───Users
+│   │   │       ├───AddUser
+│   │   │       ├───DeleteUser
+│   │   │       ├───LoginUser
+│   │   │       └───UpdateUser
+│   │   ├───DependencyInjection
+│   │   ├───DTOs
+│   │   ├───Interfaces
+│   │   │   ├───Authentication
+│   │   │   └───Authorizable
+│   │   ├───Mappings
+│   │   ├───Queries
+│   │   │   ├───TodoItems
+│   │   │   │   └───GetTodoItem
+│   │   │   │       ├───ById
+│   │   │   │       └───ByUserId
+│   │   │   └───User
+│   │   │       └───GetUser
+│   │   │           ├───ByEmail
+│   │   │           ├───ById
+│   │   │           └───ByUsername
+│   │   ├───Responses
+│   │   └───Validators
+│   │       ├───Exceptions
+│   │       ├───Extensions
+│   │       └───ValidationMessages
+│   ├───ToDo.Domain  // Entities (User, TodoItem, RefreshToken) + repository abstractions
+│   │   ├───Abstractions
+│   │   └───Entities
+│   └───ToDo.Infrastructure // EF Core DbContext, repositories, JWT, CORS, Swagger, DI
+│       ├───DependencyInjection
+│       └───Persistence
+│           ├───Data
+│           │   ├───DbContexts
+│           │   │   └───Configurations
+│           │   └───Migrations
+│           └───Repositories
+└───Frontend
+    └───Todo.Frontend  // Blazor WebAssembly client using MudBlazor
+        ├───Docker
+        ├───Layout
+        ├───Models
+        ├───Pages
+        ├───Properties
+        └───wwwroot
 ```
 
 ---
@@ -130,7 +181,7 @@ AppTemplate
 
 ## Local Development Setup
 ### Prerequisites
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 - SQL Server 2022 (local instance) **or** Docker Desktop to run the bundled SQL Server container
 - Optional: MySQL 8 if you prefer the Pomelo provider
 - Node.js 18+ (required by MudBlazor build tooling for some workloads)
@@ -144,12 +195,10 @@ dotnet restore
 ```
 
 ### Configure Environment
-1. Copy `App.Api/appsettings.Development.json` and adjust:
-   - `ConnectionStrings:DefaultConnection`
-   - `Jwt:Key` (≥16 chars), `Jwt:RefreshTokenKey` (≥32 chars), `Jwt:Issuer`, `Jwt:Audience`
-2. Ensure the same JWT values are used in production (prefer `dotnet user-secrets` or environment variables instead of committing keys).
-3. Optional: update `Todo.Frontend/Program.cs` `HttpClient` base address if your API runs on a non-default port.
-
+## Just add to your Environment:
+      -ConnectionStrings__DefaultConnection:{DB_URL} 
+      -Jwt__Key:{JWT_KEY} you can generate: https://jwtsecrets.com
+      -Jwt_RefreshTokenKey:{JWT_REFRESHTOKEN} you can generate: https://jwtsecrets.com
 ---
 
 ## Database & Migrations
@@ -207,25 +256,11 @@ docker-compose up -d               # run detached
 docker-compose down                # stop and remove containers
 ```
 
-Default published ports:
-- API: `http://localhost:5000`
-- SQL Server: `localhost:1433`
-
-Environment variables (override in compose or runtime):
-- `ConnectionStrings__DefaultConnection`
-- `Jwt__Key`, `Jwt__RefreshTokenKey`, `Jwt__Issuer`, `Jwt__Audience`
-
 > The compose file builds only the API container. To deploy the Blazor WASM client together, host it from a static file server (e.g., Azure Static Web Apps, S3 + CloudFront) or add another container running `dotnet publish -c Release`.
 
 ---
 
 ## Testing & Quality
-### Unit Tests
-```bash
-dotnet test
-```
-- Focus on application layer command/query handlers (xUnit, Moq).
-- Extend tests to cover new behaviors and validation logic.
 
 ### Manual API QA
 - Swagger UI provides interactive docs with JWT “Authorize” support.
@@ -236,32 +271,7 @@ dotnet test
 - Logging is provided via the built-in ASP.NET Core logging pipeline.
 - JWT authentication events log success/failure for easier diagnostics (`JwtServiceRegistration`).
 
----
-
-## Configuration Reference
-### `App.Api/appsettings.Development.json`
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=AppDb;User Id=sa;Password=YourPassword123!;TrustServerCertificate=true"
-  },
-  "Jwt": {
-    "Key": "your-super-secret-key-here-minimum-16-characters-long",
-    "RefreshTokenKey": "your-refresh-token-secret-key-here-minimum-32-characters-long",
-    "Issuer": "App",
-    "Audience": "UserApp"
-  }
-}
 ```
-
-### Environment Variables Cheatsheet
-| Variable | Purpose |
-| --- | --- |
-| `ASPNETCORE_ENVIRONMENT` | `Development`, `Staging`, `Production` |
-| `ConnectionStrings__DefaultConnection` | Overrides DB connection string |
-| `Jwt__Key` / `Jwt__RefreshTokenKey` | Secrets for token signing |
-| `Jwt__Issuer` / `Jwt__Audience` | Token metadata |
-
 ### Launch Profiles
 - API: `https://localhost:7003` (HTTPS), `http://localhost:5248` (HTTP)
 - Frontend: `https://localhost:7076` (HTTPS), `http://localhost:5206` (HTTP)
@@ -274,15 +284,6 @@ dotnet test
 - **Migrations during docker-compose**: run `dotnet ef database update` locally before starting containers, or bake migrations into the entrypoint of the API container.
 - **Invalid token errors**: confirm `Jwt` settings match between API configuration and any external client.
 - **HTTPS certificates**: trust the dev certificate (`dotnet dev-certs https --trust`) to avoid browser warnings for the API.
-
----
-
-## Roadmap Ideas
-- Add an admin dashboard in Blazor for managing users and tokens.
-- Implement automatic token refresh in the WASM client via `DelegatingHandler`.
-- Introduce integration tests using `WebApplicationFactory`.
-- Add CI/CD pipelines (GitHub Actions/Azure DevOps) to build, test, and publish Docker images.
-- Extend logging with Serilog + structured sinks (Seq, ELK).
 
 ---
 
