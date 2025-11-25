@@ -14,26 +14,6 @@ namespace ToDo.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            var jsonSource = new JsonConfigurationSource
-            {
-                Path = "appsettings.json",
-                Optional = false,
-                ReloadOnChange = true
-            };
-            builder.Configuration.Sources.Add(
-                new EnvironmentSubstitutionSource(jsonSource)
-            );
-
-            var envJsonSource = new JsonConfigurationSource
-            {
-                Path = $"appsettings.{builder.Environment.EnvironmentName}.json",
-                Optional = true,
-                ReloadOnChange = true
-            };
-            builder.Configuration.Sources.Add(
-                new EnvironmentSubstitutionSource(envJsonSource)
-            );
-
             builder.Configuration.AddEnvironmentVariables();
 
             var configuration = builder.Configuration;
