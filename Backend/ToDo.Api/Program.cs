@@ -1,6 +1,5 @@
 using MediatR;
 using Microsoft.Extensions.Configuration.Json;
-using ToDo.Api.Configuration;
 using ToDo.Api.Middleware;
 using ToDo.Application.Behaviors;
 using ToDo.Application.DependencyInjection;
