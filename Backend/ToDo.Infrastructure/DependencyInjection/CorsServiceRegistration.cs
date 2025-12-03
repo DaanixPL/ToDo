@@ -8,12 +8,13 @@ namespace ToDo.Infrastructure.DependencyInjection
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAllOrigins",
+                options.AddPolicy("AllowSpecificOrgin",
                     builder =>
                     {
-                        builder.AllowAnyOrigin()
-                               .AllowAnyMethod()
-                               .AllowAnyHeader();
+                        builder.WithOrigins("https://todo.vdanix.dev")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+
                     });
             });
             return services;

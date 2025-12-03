@@ -36,7 +36,7 @@ namespace ToDo.Api
             }
 
             app.UseHttpsRedirection();
-            app.UseCors("AllowAllOrigins");
+            app.UseCors("AllowSpecificOrgin");
             app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();
