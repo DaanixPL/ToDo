@@ -7,7 +7,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://todobackend.vdanix.dev") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://todobakcend.vdanix.dev") });
 
 builder.Services.AddMudServices();
 
