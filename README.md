@@ -1,6 +1,6 @@
-# AppTemplate · .NET 8 Clean Architecture + Blazor WebAssembly
+# ToDo · .NET 8 Clean Architecture + Blazor WebAssembly
 
-A production-ready reference solution that combines a **Clean Architecture back end** (CQRS, MediatR, EF Core, JWT with refresh tokens) with a **Blazor WebAssembly front end** styled with MudBlazor. The template covers authentication, todo task management, domain-driven abstractions, centralized error handling, and Docker-based deployment so you can bootstrap new projects quickly.
+A production-ready ToDo application that combines a **Clean Architecture back end** (CQRS, MediatR, EF Core, JWT with refresh tokens) with a **Blazor WebAssembly front end** styled with MudBlazor. The application features authentication, todo task management, domain-driven abstractions, centralized error handling, and Docker-based deployment.
 
 ---
 
@@ -31,7 +31,7 @@ A production-ready reference solution that combines a **Clean Architecture back 
 
 ## Technology Stack
 **Back End**
-- .NET 8 Web API (`App.Api`)
+- .NET 8 Web API (`ToDo.Api`)
 - MediatR for CQRS request handling
 - Entity Framework Core + SQL Server (Pomelo MySQL provider also referenced)
 - FluentValidation for input rules
@@ -120,13 +120,13 @@ ToDo
 ---
 
 ## Back-End Architecture
-### API Layer (`App.Api`)
+### API Layer (`ToDo.Api`)
 - Controllers (`UsersController`, `AuthController`, `TodoItemsController`) translate HTTP requests into MediatR commands/queries.
 - `ExceptionHandlingMiddleware` normalizes error responses, mapping `Unauthorized`, `Forbidden`, `NotFound`, and FluentValidation failures to JSON payloads.
 - Swagger exposed automatically in Development for interactive API docs.
 - HTTPS enforced by default; CORS policy `AllowAllOrigins` is registered via infrastructure configuration.
 
-### Application Layer (`App.Application`)
+### Application Layer (`ToDo.Application`)
 - **Commands**: add/update/delete todo items, create/update/delete users, login, refresh/revoke tokens.
 - **Queries**: fetch todo items (by ID, by user, by current user), fetch users (by ID, email, username).
 - **Pipeline behaviors**:
@@ -135,14 +135,14 @@ ToDo
 - **Mappings**: AutoMapper profiles convert between commands, DTOs, and domain entities; password hashing handled centrally in the handler.
 - **DTOs & Responses**: encapsulate data returned to API clients, keeping domain entities internal.
 
-### Domain Layer (`App.Domain`)
+### Domain Layer (`ToDo.Domain`)
 - Entities:
   - `User` – includes email, hashed password, registration/login timestamps, `IsActive`, `IsAdmin`, and refresh token collection.
   - `TodoItem` – stores title, description, ownership (`UserId`), timestamps, and completion state.
   - `RefreshToken` – tracks issued refresh tokens with expiry and revocation flags.
 - Repository abstractions (`IUserRepository`, `ITodoItemRepository`, `IRefreshTokenRepository`, `IUnitOfWork`) define persistence contracts consumed by the application layer.
 
-### Infrastructure Layer (`App.Infrastructure`)
+### Infrastructure Layer (`ToDo.Infrastructure`)
 - `AppDbContext` (EF Core) exposes `DbSet<T>` for all domain entities and applies entity configurations automatically.
 - Repository implementations translate abstractions into EF Core operations.
 - Service registrations:
@@ -181,7 +181,7 @@ ToDo
 
 ## Local Development Setup
 ### Prerequisites
-- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - SQL Server 2022 (local instance) **or** Docker Desktop to run the bundled SQL Server container
 - Optional: MySQL 8 if you prefer the Pomelo provider
 - Node.js 18+ (required by MudBlazor build tooling for some workloads)
@@ -190,7 +190,7 @@ ToDo
 ### Clone & Restore
 ```bash
 git clone <repository-url>
-cd AppTemplate
+cd ToDo
 dotnet restore
 ```
 
@@ -202,17 +202,17 @@ dotnet restore
 ---
 
 ## Database & Migrations
-The solution ships with EF Core migrations under `App.Infrastructure/Persistence/Data/Migrations`.
+The solution ships with EF Core migrations under `ToDo.Infrastructure/Persistence/Data/Migrations`.
 
 ```bash
 # from repository root
-cd App.Api
+cd Backend/ToDo.Api
 
 # Apply latest migrations (uses DefaultConnection)
 dotnet ef database update
 
 # Create a new migration (if you change the model)
-dotnet ef migrations add <MigrationName> --project ../App.Infrastructure --startup-project .
+dotnet ef migrations add <MigrationName> --project ../ToDo.Infrastructure --startup-project .
 ```
 
 > **Tip:** If you use Docker SQL Server, ensure the connection string points to `Server=localhost,1433;` or the Docker service name when running inside containers (`Server=database;` as provided in docker-compose).
@@ -222,7 +222,7 @@ dotnet ef migrations add <MigrationName> --project ../App.Infrastructure --start
 ## Running the Applications
 ### Back End (API)
 ```bash
-cd App.Api
+cd Backend/ToDo.Api
 dotnet run --launch-profile https   # exposes https://localhost:7003 and http://localhost:5248
 ```
 - Swagger UI: `https://localhost:7003/swagger`
@@ -231,7 +231,7 @@ dotnet run --launch-profile https   # exposes https://localhost:7003 and http://
 
 ### Front End (Blazor WASM)
 ```bash
-cd Todo.Frontend
+cd Frontend/Todo.Frontend
 dotnet run --launch-profile https   # defaults to https://localhost:7076
 ```
 - The WASM client expects the API at `https://localhost:7003/`; adjust base address if needed.
@@ -245,18 +245,18 @@ dotnet run --launch-profile https   # defaults to https://localhost:7076
 ---
 
 ## Containerized Deployment
-The `Docker/docker-compose.yml` file provisions:
-- `api` service (multi-stage build using `Docker/Dockerfile`)
-- `database` service (SQL Server 2022)
+The solution includes Dockerfiles for containerized deployment:
+- Backend API: `Backend/Dockerfile` (multi-stage build)
+- Frontend: `Frontend/Todo.Frontend/Docker/Dockerfile`
 
+### Building the Backend Container
 ```bash
-cd Docker
-docker-compose up --build          # builds API, starts SQL Server
-docker-compose up -d               # run detached
-docker-compose down                # stop and remove containers
+# from repository root
+docker build -f Backend/Dockerfile -t todo-api .
+docker run -p 80:80 -p 443:443 todo-api
 ```
 
-> The compose file builds only the API container. To deploy the Blazor WASM client together, host it from a static file server (e.g., Azure Static Web Apps, S3 + CloudFront) or add another container running `dotnet publish -c Release`.
+> To deploy the Blazor WASM client, you can build it separately and host it from a static file server (e.g., Azure Static Web Apps, S3 + CloudFront, nginx) or containerize it using the Frontend Dockerfile.
 
 ---
 
