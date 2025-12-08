@@ -275,6 +275,7 @@ docker run -p 80:80 -p 443:443 todo-api
 ### Launch Profiles
 - API: `https://localhost:7003` (HTTPS), `http://localhost:5248` (HTTP)
 - Frontend: `https://localhost:7076` (HTTPS), `http://localhost:5206` (HTTP)
+```
 
 ---
 
@@ -286,5 +287,5 @@ docker run -p 80:80 -p 443:443 todo-api
 - **HTTPS certificates**: trust the dev certificate (`dotnet dev-certs https --trust`) to avoid browser warnings for the API.
 
 ---
-```
-**Happy building!** This template is designed to be a solid foundation for production-ready .NET applications with a modern Blazor front end. Adapt, extend, and ship. 🚀
+
+**Happy building!** This application is a solid foundation for production-ready .NET applications with a modern Blazor front end. Adapt, extend, and ship. 🚀
