@@ -181,7 +181,7 @@ ToDo
 
 ## Local Development Setup
 ### Prerequisites
-- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - SQL Server 2022 (local instance) **or** Docker Desktop to run the bundled SQL Server container
 - Optional: MySQL 8 if you prefer the Pomelo provider
 - Node.js 18+ (required by MudBlazor build tooling for some workloads)
